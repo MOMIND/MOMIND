@@ -5,22 +5,6 @@
 
 <body>
 
-  {{> hello}}
+  {{> mindmap}}
      
 </body>
-
-
-<template name="hello">
-   <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" style="position:fixed; height:100%;width:100%;top:0;left:0;"></canvas>
-    <script type='text/javascript'>
-	  var Module = {
-		TOTAL_MEMORY: 64 * 1024 * 1024,
-		errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
-		compatibilitycheck: null,
-		dataUrl: "/Development/public.data",
-		codeUrl: "/Development/public.js",
-		memUrl: "/Development/public.mem",
-	  };
-	</script>
-	<script src="/Development/UnityLoader.js"></script>
-</template>

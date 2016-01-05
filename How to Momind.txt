@@ -1,0 +1,18 @@
+AM BESTEN MIT FIREFOX TESTEN!!!
+
+
+im MoMind\public folder befindet sich die Unity WebGL mindmap.
+
+API:
+siehe MoMind\public\client.js
+
+Die Wrapper Methoden sind start punkte die aufgerufen werden bei der jeweiligen Aktion.
+
+Mit EnableDeveloperConsole() kann für Entwicklungszwecke eine Konsole geöffnet werden.
+
+Befehle DÜRFEN erst nach der MoMindReady funktion ausgeführt werden!
+
+Damit MoMind geladen wird muss zunächst die Init Methode aufgerufen werden.
+Diese übergibt die Id und den Namen des Hauptelements.
+
+z.B.: Init("meineId","Mein Name");

@@ -5,22 +5,23 @@
 function MoMindReady()
 {		
 	console.log("MoMindReady");
+	Meteor.call('InitMoMap', function(e,r){});
 }
 function MoMindRename(id, newName)
 {		
-	console.log("MoMindRename"+id);
+	CreatedChange("MoMindRename", {id: id, name: newName});
 }
 function MoMindSetPosition(id, x, y)
 {		
-	console.log("MoMindSetPosition"+id);
+	CreatedChange("MoMindSetPosition", {id: id, x: x, y: y});
 }
 function MoMindDelete(id)
 {		
-	console.log("MoMindDelete"+id);
+	CreatedChange("MoMindDelete", {id: id});
 }
-function MoMindAdd(id, name,x, y)
+function MoMindAdd(id, name, x, y) //parentid missing
 {		
-	console.log("MoMindAdd"+id);
+	CreatedChange("MoMindAdd", {id: id, name: name, x: x, y: y});
 }
 
 // ===========================================================
@@ -75,3 +76,9 @@ function SendAction(action, id, name, x, y, childId)
 	var jsonString = JSON.stringify(nodeAction);
 	SendMessage("MoMind","ReadAction",jsonString);
 }
+
+function CreatedChange(action, params)
+{
+	Meteor.call('DetectedChange', action, params, function(e,r){});
+}
+

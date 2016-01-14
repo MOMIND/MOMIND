@@ -80,52 +80,48 @@ function SendAction(action, id, name, x, y, childId)
 
 function CreatedChange(action, params)
 {
-	if(params === undefined || action === undefined)
-	{
-		console.log("No params or action defined");
-		return;
-	}
+	if(params === undefined || action === undefined || params === null || action === null || params === "" || action === "")
+		throw new Meteor.Error("no-arguments-change","Undefined action or parameters");
 
 	saved = false;
 
-	if(mapId != undefined && initialSave != true)
+	if(mapId != undefined && initialSave != true) 
 	{
+		//Save the Map and Initial Node if there was activity, to "prevent" db save spam
 		console.log("Saved MoMap " + mapId);
 		Meteor.call('SaveInitialNode', mapId, "MoMind", localId,
 			function(e,r){if(e === undefined)
 				initialSave = true;});
 	}
 
-	console.log(params);
-
-	switch(action)
+	switch(action)//First make the call with the Parameters, on Success, try to Record History, then finish with saved=true;
 	{
 		case "MoMindRename":
-			console.log("MoMindRename " + params.id);
-			Meteor.call('RenameNode', params.id, params.name, mapId,
+			console.log("MoMindRename");
+			Meteor.call('RenameNode', params.id, params.name, mapId, localId,
 				function(e,r){if(e === undefined) 
 					Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
 						function(e,r){if(e === undefined)
 							saved=true;});});
 			break;
 		case "MoMindSetPosition":
-			console.log("MoMindSetPosition " + params.id);
-			Meteor.call('MoveNode', params.id, params.x, params.y, mapId, 
+			console.log("MoMindSetPosition");
+			Meteor.call('MoveNode', params.id, params.x, params.y, mapId, localId,
 				function(e,r){if(e === undefined) 
 					Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
 						function(e,r){if(e === undefined)
 							saved=true;});});
 			break;
 		case "MoMindDelete":
-			console.log("MoMindDelete " + params.id);
-			Meteor.call('DeleteNode', params.id, mapId,
+			console.log("MoMindDelete");
+			Meteor.call('DeleteNode', params.id, mapId, localId,
 				function(e,r){if(e === undefined) 
 					Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
 						function(e,r){if(e === undefined)
 							saved=true;});});
 			break;
 		case "MoMindAdd":
-			console.log("MoMindAdd " + params.id);
+			console.log("MoMindAdd");
 			Meteor.call('AddChildNode', params.id, params.name, params.x, params.y, /*parentid!!!*/mapId, mapId, localId,
 				function(e,r){if(e === undefined) 
 					Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
@@ -136,4 +132,3 @@ function CreatedChange(action, params)
 			return;
 	}
 }
-

@@ -1,0 +1,3 @@
+cd MoMind
+meteor
+pause

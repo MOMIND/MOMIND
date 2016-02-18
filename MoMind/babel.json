@@ -1,0 +1,6 @@
+{
+  "debug": true,                          // print loaded config
+  "verbose": true,                        // print active file extensions
+  "extensions": ["es6.js", "es6"],        // babel managed extensions
+  "stage": 0                              // experimental ES7 support
+}

@@ -17,3 +17,13 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 random
+meteorhacks:npm
+cosmos:browserify
+react
+mizzao:jquery-ui
+jsx
+twbs:bootstrap
+universe:modules
+
+
+npm-container

@@ -1,0 +1,12 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+
+    "ternjs": {
+        "exclude": ["/MoMind/public/Development/public.data", "/MoMind/public/Development/public.js", "node_modules/**"]
+    }
+}

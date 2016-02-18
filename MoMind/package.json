@@ -1,0 +1,35 @@
+{
+  "name": "momind",
+  "version": "0.0.2",
+  "description": "A simple, leightwieght and free MindMap for instant collaboration",
+  "main": "MoMind.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOMIND/MOMIND.git"
+  },
+  "keywords": [
+    "mindmap",
+    "momind",
+    "fullstack",
+    "meteor",
+    "react",
+    "es7",
+    "motex"
+  ],
+  "author": "PA Kopciak, P Kolar, D Hellmann, M Dollfuss, S ElAeraky",
+  "license": "mpl-2.0",
+  "bugs": {
+    "url": "https://github.com/MOMIND/MOMIND/issues"
+  },
+  "homepage": "https://github.com/MOMIND/MOMIND#readme",
+  "dependencies": {
+    "externalify": "0.1.0",
+    "jquery": "2.2.0",
+    "jquery-ui": "1.10.5",
+    "react": "0.14.7",
+    "react-bootstrap": "0.28.3",
+    "react-dom": "0.14.7",
+    "react-mixin": "3.0.3",
+    "react-router": "2.0.0"
+  }
+}

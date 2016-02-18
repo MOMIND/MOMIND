@@ -1,0 +1,17 @@
+<template name="mindmap">
+  <script src="/TemplateData/UnityProgress.js"></script>
+  <script src="client.js"></script>
+   <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" style="position:fixed; height:100%;width:100%;top:0;left:0;"></canvas>
+	<script type='text/javascript'>
+  var Module = {
+    TOTAL_MEMORY: 268435456,
+    errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+    compatibilitycheck: null,
+    dataUrl: "Release/public.data",
+    codeUrl: "Release/public.js",
+    memUrl: "Release/public.mem",
+  };
+</script>
+<script src="Release/UnityLoader.js"></script>
+
+</template>

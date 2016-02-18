@@ -1,0 +1,11 @@
+{
+  "transforms": {
+    "externalify": {
+      "global": true,
+      "external": {
+        "react": "React.require",
+        "react-dom": "React.require"
+      }
+    }
+  }
+}

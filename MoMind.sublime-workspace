@@ -1,0 +1,424 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"obje",
+				"PropTypes.object	React"
+			],
+			[
+				"isre",
+				"isRequired	React"
+			],
+			[
+				"Meteors",
+				"Meteor.startup	Meteor.startup(fn)"
+			],
+			[
+				"Metec",
+				"Meteor.isClient with if	Meteor.isClient with if"
+			],
+			[
+				"node",
+				"nodetext"
+			],
+			[
+				"nodete",
+				"nodetext"
+			],
+			[
+				"Get",
+				"GetNodePointer"
+			],
+			[
+				"local",
+				"LocalStorage"
+			],
+			[
+				"ini",
+				"initialSave"
+			],
+			[
+				"Met",
+				"Meteor.apply	Meteor.apply(name, params [, options] [, asyncCallback])"
+			],
+			[
+				"Mete",
+				"Meteor.call	Meteor.call(name, param1, param2, ... [, asyncCallback])"
+			],
+			[
+				"con",
+				"console       (obj)  [E]"
+			],
+			[
+				"find",
+				"findOne (fn) [E]"
+			],
+			[
+				"map",
+				"mapid  ([])  [C]"
+			],
+			[
+				"Meteorcli",
+				"Meteor.isClient with if	Meteor.isClient with if"
+			],
+			[
+				"Meteorsub",
+				"Meteor.subscribe	Meteor.subscribe(name [, arg1, arg2, ... ] [, callbacks])"
+			],
+			[
+				"Meteor",
+				"Meteor.publish	Meteor.publish(name, fn)"
+			],
+			[
+				"if",
+				"ife	if … else"
+			],
+			[
+				"Sessio",
+				"Session.set	Meteor: Session.set(key, value)"
+			],
+			[
+				"check",
+				"checked"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "MoMind.sublime-project",
+			"settings":
+			{
+				"buffer_size": 189,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 296.0,
+		"last_filter": "enable",
+		"selected_items":
+		[
+			[
+				"enable",
+				"SublimeLinter: Enable Linter"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"sbc se",
+				"SBC: Settings – User"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control:instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: if"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 630.0
+	},
+	"console":
+	{
+		"height": 104.0,
+		"history":
+		[
+			"import urllib2,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), 'wb' ).write(by) if dh == h else None; print('Error validating download (got %s instead of %s), please try manual install' % (dh, h) if dh != h else 'Please restart Sublime Text to finish installation')"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/peter/MOMIND",
+		"/home/peter/MOMIND/MoMind"
+	],
+	"file_history":
+	[
+		"/home/peter/.config/sublime-text-3/Packages/Babel Snippets/README.md",
+		"/home/peter/react lynda/Mine/src/HelloWorld.jsx",
+		"/home/peter/react lynda/Mine/index.html",
+		"/home/peter/.config/sublime-text-3/Packages/tern_for_sublime/Tern.sublime-settings",
+		"/home/peter/CodeNote",
+		"/home/peter/react lynda/Mine/reacthtml.html",
+		"/home/peter/react lynda/Mine/HelloWorld.js",
+		"/home/peter/QuickNote",
+		"/home/peter/.config/sublime-text-3/Packages/tern_for_sublime/node_modules/tern/README.md",
+		"/home/peter/.config/sublime-text-3/Packages/tern_for_sublime/README.md",
+		"/home/peter/.config/sublime-text-3/Packages/User/Tern.sublime-settings",
+		"/home/peter/.config/sublime-text-3/Packages/User/Babel.sublime-settings",
+		"/home/peter/.config/sublime-text-3/Packages/Babel/Babel.sublime-settings",
+		"/home/peter/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/peter/simple-todo-react/node_modules/eslint/README.md",
+		"/home/peter/simple-todo-react/node_modules/eslint/package.json",
+		"/home/peter/react lynda/Mine/index.js",
+		"/home/peter/react lynda/Mine/src/index.jsx",
+		"/home/peter/simple-todo-react/simple-todos-react.jsx",
+		"/home/peter/simple-todo-react/simple-todo-react.html",
+		"/home/peter/react lynda/Mine/src/test.jsx",
+		"/home/peter/.pam_environment",
+		"/home/peter/simple-todo-react/Task.jsx",
+		"/home/peter/simple-todo-react/AccountsUIWrapper.jsx",
+		"/home/peter/simple-todo-react/App.jsx",
+		"/home/peter/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/peter/npm-debug.log",
+		"/home/peter/.eslintrc",
+		"/home/peter/MOMIND/MoMind/MoMind.js",
+		"/home/peter/simple-todo-react/simple-todo-react.css",
+		"/home/peter/simple-todos/simple-todos.js",
+		"/home/peter/.config/sublime-text-3/Packages/User/sbc-setting.sublime-settings",
+		"/home/peter/.config/sublime-text-3/Packages/Better Completion/sbc-setting.sublime-settings",
+		"/home/peter/simple-todo-react/simple-todo-react.js",
+		"/home/peter/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/peter/Documents/NooTrac/config/development/env.sh",
+		"/home/peter/Documents/tracc/server/aboutserver",
+		"/home/peter/Documents/tracc/client/aboutclient",
+		"/home/peter/Documents/tracc/client/about",
+		"/home/peter/MOMIND/MoMind/MoMind.html",
+		"/home/peter/MOMIND/MoMind/mindmap.html",
+		"/home/peter/Documents/Processing3/processing-java",
+		"/home/peter/.processing/preferences.txt",
+		"/home/peter/Documents/Processing3/processing",
+		"/media/peter/UBERTY/workspace/matlab/wmmt/dm151518_ue7/log",
+		"/usr/share/X11/xorg.conf.d/10-evdev.conf",
+		"/usr/share/X11/xorg.conf.d/50-vmmouse.conf",
+		"/usr/share/touchegg/touchegg.conf",
+		"/home/peter/Documents/PyMT-0.5.1/README",
+		"/etc/hddtemp.db",
+		"/home/peter/Desktop/Matlab.desktop",
+		"/home/peter/Desktop/wmmt10/searchMatching.m",
+		"/home/peter/Desktop/wmmt10/Shazam.m",
+		"/home/peter/.cache/.fr-HYuuOq/PyMT-0.5.1/README",
+		"/home/peter/.cache/.fr-N40iJ9/fingerprint/match_query.m",
+		"/home/peter/Documents/librespot-master/README.md",
+		"/home/peter/Desktop/Untitled Document",
+		"/home/peter/MOMIND/MoMind/public/client.js",
+		"/home/peter/simple-todos/simple-todos.html",
+		"/home/peter/.config/sublime-text-3/Packages/Meteor Snippets/snippets/html/meteor-if.sublime-snippet",
+		"/home/peter/simple-todos/simple-todos.css",
+		"/home/peter/MOMIND/How to Momind.txt",
+		"/home/peter/Documents/IPI-NEO 1",
+		"/home/peter/Documents/caffe/src/caffe/proto/caffe.proto",
+		"/home/peter/Documents/caffe/src/caffe/proto/caffe.pb.cc",
+		"/home/peter/MOMIND/start.bat",
+		"/media/peter/UBERTY/download/audacity-minsrc-2.1.0/README.txt",
+		"/media/peter/UBERTY/workspace/matlab/mtp-fa/ue4.m",
+		"/media/peter/UBERTY/downloads/euler.m"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 87.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"plugin",
+			"tab",
+			"log",
+			"console.log",
+			"== un",
+			"myFirstNode",
+			"name",
+			"instal"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "MoMind.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 189,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								35,
+								35
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "MoMind.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -17,7 +17,7 @@
     "motex"
   ],
   "author": "PA Kopciak, P Kolar, D Hellmann, M Dollfuss, S ElAeraky",
-  "license": "mpl-2.0",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/MOMIND/MOMIND/issues"
   },
@@ -26,10 +26,17 @@
     "externalify": "0.1.0",
     "jquery": "2.2.0",
     "jquery-ui": "1.10.5",
+    "jquery.panzoom": "2.0.6",
     "react": "0.14.7",
     "react-bootstrap": "0.28.3",
+    "react-burger-menu": "1.5.2",
     "react-dom": "0.14.7",
     "react-mixin": "3.0.3",
+    "react-prefixr": "0.1.0",
     "react-router": "2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

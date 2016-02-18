@@ -2,7 +2,10 @@
    "react-bootstrap": "0.28.3",
    "react-mixin": "3.0.3",
    "react-router": "2.0.0",
+   "react-prefixr": "0.1.0",
+   "react-burger-menu": "1.5.2",
    "jquery": "2.2.0",
    "jquery-ui": "1.10.5",
+   "jquery.panzoom": "2.0.6",
    "externalify": "0.1.0"
 }

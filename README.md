@@ -32,7 +32,7 @@ Install the stable version of Node and make it the default one. Also install 0.1
 
 ## Packages
 - Install new packages either for Meteor with `meteor add` or for React and Node with `npm install --save`. Use only full Version numbers in `package.json` and `packages.json`, not placeholder (like `@`,`^`,..). 
-- Create global reference in `app.browserify.js` and, if they need dependencies from Meteor, include them in `app.browserify.options.json`.
+- Create global reference in `*.browserify.js` and, if they need dependencies from Meteor, include them in `*.browserify.options.json`. Place inside `/lib`
 
 ## Coding
 - Use ES6/7  for js and jsx files. 
@@ -43,6 +43,7 @@ Install the stable version of Node and make it the default one. Also install 0.1
 - In React ES6 there are no mixins; use [these](http://blog.jamiter.com/2016/01/28/es6-classes-with-react-mixin-meteor-1-3/) [techniques](http://egorsmirnov.me/2015/09/30/react-and-es6-part4.html) to create Higher-Order Components.
 - Use `ReactMixIn(Class.prototype, ReactMeteorData);` at EOF for Meteor Reactive Data mixin support.
 - Use `Class.probTypes = {};` and `Class.defaultProps = {};` at EOF for props.
+- Use SASS/SCSS instead of plain CSS. WIll be converted automatically.
 - Extend from MoComponent for easier import management, binds and props *(not yet implemented)*.
 
 Note: Explicit arrow functions, (static) properties initialization, annotations, `::bind` are not yet supported by the transpiler because they are part of ES7+.
@@ -61,12 +62,15 @@ Available only on the Server.
 *publish.js* - Publishing of Collections
 
 - **/lib**
-Loaded first, before anthing else. Available to Client and Server
+Loaded first, before anthing else. Loads for both if not in `/client` or `/server`.
 *methods.js* - Methods for Server/Client. PreRun on Client, simulated on Server.
 *collections.js* - Define Collections for Mongo/MiniMongo for Server and Client.
 
 -  **/public**
-Crawler, images, robots. Always available for crawler
+Crawler, images, robots. Static Data. Available to the Client
+
+- **/private**
+API Keys? Static Data. Available to Server
 
 - **/packages**
 Packages by Meteor. 
@@ -75,7 +79,7 @@ Contains `npm-container` for including npm packages in Meteor.
 - **/node_modules**
 Packages downloaded by `npm`.
 
-- ***/components**
+- **/components**
 Contains React Components and ViewController. `*.import.jsx`
 
 ## Stuff?

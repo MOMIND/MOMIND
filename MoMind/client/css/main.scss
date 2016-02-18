@@ -1,0 +1,23 @@
+@import 'mixins';
+
+$green: #30B39A;
+$light-green: #8ACEC0;
+$dark-green: #009075;
+$white: #F5F5F5;
+$grey: #8B8B8B;
+$light-grey: #E5E5E5;
+$dark-grey: #404040;
+$black: #272727;
+
+@include font-face("SSP", "/font/SourceSansPro-Light", 200, null, otf);
+@include font-face("SSP", "/font/SourceSansPro-Regular", 400, null, otf);
+@include font-face("SSP", "/font/SourceSansPro-Semibold", 600, null, otf);
+@include font-face("SSP", "/font/SourceSansPro-Bold", 800, null, otf);
+@include font-face("SSP", "/font/SourceSansPro-LightIt", 200, italic, otf);
+@include font-face("SSP", "/font/SourceSansPro-It", 400, italic, otf);
+@include font-face("SSP", "/font/SourceSansPro-SemiboldIt", 600, italic, otf);
+@include font-face("SSP", "/font/SourceSansPro-BoldIt", 800, italic, otf);
+
+body {
+   font-family: "SSP";
+}

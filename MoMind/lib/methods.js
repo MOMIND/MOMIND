@@ -19,7 +19,7 @@ Meteor.methods({
    AddChildNode(nodeid, nodetext, x, y, parentid, mapid, localid) {//todo: check other params for validity
       let node = MoNodes.find({nodeid: parentid}).fetch()[0];
 
-      if(node.mapid != mapid)
+      if(node.mapid !== mapid)
          throw new Meteor.Error("not-allowed-mapid","Not Allowed to make Changes");
 
       MoNodes.insert
@@ -37,7 +37,7 @@ Meteor.methods({
    RenameNode(nodeid, newname, mapid, localid) {//todo: check other params for validity
       let node = MoNodes.find({nodeid: nodeid}).fetch()[0];
 
-      if(node.mapid != mapid)
+      if(node.mapid !== mapid)
          throw new Meteor.Error("not-allowed-mapid","Not Allowed to make Changes");
 
       MoNodes.update(node._id, 
@@ -49,7 +49,7 @@ Meteor.methods({
    MoveNode(nodeid, newx, newy, mapid, localid) {//todo: check other params for validity
       let node = MoNodes.find({nodeid: nodeid}).fetch()[0];
 
-      if(node.mapid != mapid)
+      if(node.mapid !== mapid)
          throw new Meteor.Error("not-allowed-mapid","Not Allowed to make Changes");
 
       MoNodes.update(node._id, 
@@ -61,7 +61,7 @@ Meteor.methods({
    DeleteNode(nodeid, mapid, localid) {//todo: make remove child nodes & check other params for validity
       let node = MoNodes.find({nodeid: nodeid}).fetch()[0];
 
-      if(node.mapid != mapid)
+      if(node.mapid !== mapid)
          throw new Meteor.Error("not-allowed-mapid","Not Allowed to make Changes");
 
       MoNodes.remove(node._id);

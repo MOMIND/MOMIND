@@ -19,6 +19,12 @@
       border: 2px solid $dark-green;
    }
 
+   &.active
+   {
+      padding: 3px; 
+      border: 4px solid $dark-green;
+   }
+
    p {
       font-weight: 400;
       margin: 0px;  

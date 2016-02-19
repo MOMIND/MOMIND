@@ -8,7 +8,7 @@ $P = require("react-prefixr"); //Prefixes CSS Strings in .jsx for Brwoser Suppor
 /* ------------------------ */
 /* --- React Components --- */
 /* ------------------------ */
-//ReactBootstrapXXX = require("react-bootstrap").XXX; Import only needed Stuff
+//ReactBootstrapXXX = require("react-bootstrap").XXX;
 RBurgerMenu = require('react-burger-menu').scaleRotate;
 
 /* ------------------------ */

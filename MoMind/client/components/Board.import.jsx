@@ -10,7 +10,6 @@ export default class Board extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-
       };
    }
 
@@ -22,20 +21,25 @@ export default class Board extends React.Component {
       const creator = node.localid;
       const x = parent==='top'?0:node.x;
       const y = parent==='top'?0:node.y;
-      return (
+      let Element = (
          <Node 
          key={dbId}
          ref= {'noderef_'+i}
          index={i}
          id={id}
-         text={text}
+         initialText={text}
          parent={parent}
          creator={creator}
-         x={x}
-         y={y}
+         initialX={x}
+         initialY={y}
          />
       );
+
+      this.state.ad
+      return Element;
    }
+
+
 
    render() {
       return (

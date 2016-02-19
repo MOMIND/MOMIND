@@ -1,9 +1,10 @@
 System.import('/client/components/App').then(function(module) {
-    var App = module.default;
+    const AppModule = module.default;
 
     function run() {
-        ReactDOM.render(React.createElement(App), document.getElementById('app'));
-        console.log('Client React Ready');
+      let App = React.createElement(AppModule);
+      ReactDOM.render(App, document.getElementById('app'));
+      console.log('Client React Ready');
     }
 
     const loadedStates = ['complete', 'loaded', 'interactive'];
@@ -16,16 +17,26 @@ System.import('/client/components/App').then(function(module) {
 });
 
 Meteor.startup(function(){
-   console.log('Client Meteor Ready');
-   //Get a valid mapId (from url or generated) and subscribe on Collections with limited view
-   Meteor.call('CheckMapId',location.href.split('/')[3], 
-      function(e,r){if(e !== undefined || r === undefined) return;
-            mapId = r; 
-            Meteor.subscribe('MoNodes', mapId);
-            Meteor.subscribe('MoHist', mapId);
-         });
+  console.log('Client Meteor Ready');
+  //Get a valid mapId (from url or generated) and subscribe on Collections with limited view
 
-   localId = Random.id(8);
-   
-   MoMindReady();
+  let urlId = location.href.split('/')[3];
+
+  Meteor.call('CheckMapId', urlId,
+  (err,result) => {
+    if(err !== undefined || result === undefined)
+      return;
+
+    mapId = result;
+
+    Meteor.subscribe('MoNodes', mapId, {
+      onReady() {
+        MoMindReady();
+      }
+    });
+
+    Meteor.subscribe('MoHist', mapId);
+  });
+
+  localId = Random.id(8);
 });

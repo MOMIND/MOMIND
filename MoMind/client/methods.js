@@ -1,4 +1,4 @@
-nodePointer = undefined; //GLOBAL Observer Pointer 
+let nodePointer = undefined; //Observer Pointer 
 
 Meteor.methods({
    InitMoMap() { //Method Call when MoMindReady is received at client.js
@@ -7,9 +7,12 @@ Meteor.methods({
       //If mapId is undefined (new map), create a new id and change url
       if(mapId === undefined) {
          mapId = Random.id(10);
+         console.log("New MoMap");
          window.history.pushState('MoMap' + mapId, 'MoMind', '/' + mapId);
       } else { //else get the text of the center module and prevent initial-saving
-         nodeText = MoNodes.find({nodeid: mapId}).fetch()[0].nodetext;;
+         let nodes = MoNodes.find({nodeid: mapId}).fetch();
+         nodeText = nodes[0].nodetext;
+         console.log("Loaded MoMap");
          initialSave = true;
       }
 
@@ -22,7 +25,7 @@ Meteor.methods({
             if(field.localid === localId || field.mapid !== mapId)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Add");
 
             AddNode(field.parentid, field.nodeid, field.nodetext, field.x, field.y);
          }
@@ -34,7 +37,7 @@ Meteor.methods({
             if(oldNode.localid === localId || oldNode.mapid !== mapId || newNode.nodeid !== oldNode.nodeid)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Change");
 
             if(newNode.nodetext !== oldNode.nodetext)
                RenameNode(newNode.nodeid, newNode.nodetext);
@@ -46,7 +49,7 @@ Meteor.methods({
             if(field.localid === localId || field.mapid !== mapId)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Delete");
 
             DeleteNode(field.nodeid);
          }

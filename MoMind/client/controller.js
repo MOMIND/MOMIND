@@ -11,24 +11,19 @@ saved = true; //will show client if he is uptodate/saved changes on server (not 
 // Hooks
 // ===========================================================
 
-MoMindReady = function ()
-{     
+MoMindReady = () => {     
    Meteor.call('InitMoMap', function(e,r){});
 }
-MoMindRename = function(id, newName)
-{     
+MoMindRename = (id, newName) => {  
    CreatedChange("MoMindRename", {id: id, name: newName});
 }
-MoMindSetPosition = function(id, x, y)
-{     
+MoMindSetPosition = (id, x, y) => {     
    CreatedChange("MoMindSetPosition", {id: id, x: x, y: y});
 }
-MoMindDelete = function(id)
-{     
+MoMindDelete = (id) => {
    CreatedChange("MoMindDelete", {id: id});
 }
-MoMindAdd = function(id, name, x, y) //parentid missing
-{     
+MoMindAdd = (id, name, x, y) => {//parentid missing
    CreatedChange("MoMindAdd", {id: id, name: name, x: x, y: y});
 }
    
@@ -36,29 +31,24 @@ MoMindAdd = function(id, name, x, y) //parentid missing
 // Wrapper
 // ===========================================================
 
-Init = function(id, name)
-{
+Init = (id, name) => {
    SendAction("Init",id,name,undefined,undefined,undefined);
    console.log(`Initialize with ${id}`);
 }
 
-RenameNode = function(id, name)
-{
+RenameNode = (id, name) => {
    SendAction("RenameNode",id,name,undefined,undefined,undefined);
 }
 
-AddNode = function(parentId, childId, name, x, y)
-{
+AddNode = (parentId, childId, name, x, y)  => {
    SendAction("AddNode",parentId,name,x,y,childId);
 }
 
-SetPosition = function(id, name, x, y)
-{
+SetPosition = (id, name, x, y) => {
    SendAction("SetPosition", id, name, x, y,undefined);
 }
 
-DeleteNode = function (id)
-{
+DeleteNode = (id) => {
    SendAction("DeleteNode",id,undefined,undefined,undefined,undefined);
 }
 
@@ -66,8 +56,7 @@ DeleteNode = function (id)
 // Helper
 // ===========================================================
 
-SendAction = function(action, id, name, x, y, childId)
-{
+SendAction = (action, id, name, x, y, childId) => {
    const nodeAction = 
    {
       Action: action, 
@@ -81,7 +70,7 @@ SendAction = function(action, id, name, x, y, childId)
    //SendMessage("MoMind","ReadAction",jsonString);
 }
 
-CreatedChange = function(action, params)
+CreatedChange = (action, params) =>
 {
    if(params === undefined || action === undefined)
    {
@@ -95,8 +84,10 @@ CreatedChange = function(action, params)
    {
       console.log(`Saved MoMap ${mapId}`);
       Meteor.call('SaveInitialNode', mapId, "MoMind", localId,
-         function(e,r){if(e === undefined)
-            initialSave = true;});
+      (e,r) => {
+         if(e === undefined)
+            initialSave = true;
+      });
    }
 
    console.log(params);
@@ -106,34 +97,50 @@ CreatedChange = function(action, params)
       case "MoMindRename":
          console.log(`MoMindRename ${params.id}`);
          Meteor.call('RenameNode', params.id, params.name, mapId,
-            function(e,r){if(e === undefined) 
+         (e,r) => {
+            if(e === undefined) 
                Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
-                  function(e,r){if(e === undefined)
-                     saved=true;});});
+               (e,r) => {
+                  if(e === undefined)
+                     saved=true;
+               });
+         });
          break;
       case "MoMindSetPosition":
          console.log(`MoMindSetPosition ${params.id}`);
          Meteor.call('MoveNode', params.id, params.x, params.y, mapId, 
-            function(e,r){if(e === undefined) 
+         (e,r) => {
+            if(e === undefined) 
                Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
-                  function(e,r){if(e === undefined)
-                     saved=true;});});
+               (e,r) => {
+                  if(e === undefined)
+                     saved=true;
+               });
+         });
          break;
       case "MoMindDelete":
          console.log(`MoMindDelete ${params.id}`);
          Meteor.call('DeleteNode', params.id, mapId,
-            function(e,r){if(e === undefined) 
+         (e,r) => {
+            if(e === undefined) 
                Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
-                  function(e,r){if(e === undefined)
-                     saved=true;});});
+               (e,r) => {
+                  if(e === undefined)
+                     saved=true;
+               });
+         });
          break;
       case "MoMindAdd":
          console.log(`MoMindAdd ${params.id}`);
          Meteor.call('AddChildNode', params.id, params.name, params.x, params.y, /*parentid!!!*/mapId, mapId, localId,
-            function(e,r){if(e === undefined) 
+         (e,r) => {
+            if(e === undefined) 
                Meteor.call('RecordHistory', action, params, new Date(), mapId, localId,
-                  function(e,r){if(e === undefined)
-                     saved=true;});});
+               (e,r) => {
+                  if(e === undefined)
+                     saved=true;
+               });
+         });
          break;
       default:
          return;

@@ -10,6 +10,6 @@ export default class BurgerMenu extends React.Component {
    render() {
       return (
          <RBurgerMenu />
-         );
+      );
    }
 }

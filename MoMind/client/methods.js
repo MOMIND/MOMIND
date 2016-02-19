@@ -25,7 +25,7 @@ Meteor.methods({
             if(field.localid === localId || field.mapid !== mapId)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Add");
 
             AddNode(field.parentid, field.nodeid, field.nodetext, field.x, field.y);
          }
@@ -37,7 +37,7 @@ Meteor.methods({
             if(oldNode.localid === localId || oldNode.mapid !== mapId || newNode.nodeid !== oldNode.nodeid)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Change");
 
             if(newNode.nodetext !== oldNode.nodetext)
                RenameNode(newNode.nodeid, newNode.nodetext);
@@ -49,7 +49,7 @@ Meteor.methods({
             if(field.localid === localId || field.mapid !== mapId)
                return;
 
-            console.log("Detected change");
+            console.log("Detected Delete");
 
             DeleteNode(field.nodeid);
          }

@@ -1,8 +1,9 @@
 System.import('/client/components/App').then(function(module) {
-    var App = module.default;
+    const AppModule = module.default;
 
     function run() {
-      ReactDOM.render(React.createElement(App), document.getElementById('app'));
+      let App = React.createElement(AppModule);
+      ReactDOM.render(App, document.getElementById('app'));
       console.log('Client React Ready');
     }
 

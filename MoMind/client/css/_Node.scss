@@ -1,0 +1,34 @@
+& {   
+   @include prefix((
+      border-radius: 15px,
+   ),webkit moz);
+
+   background-color: $light-green;
+   color: $dark-grey;
+   border: 2px solid $green;
+
+   padding: 5px; 
+   display: inline-block;
+   position: relative;
+
+
+   &.root
+   {
+      background-color: $green;
+      color: $white;
+      border: 2px solid $dark-green;
+   }
+
+   p {
+      font-weight: 400;
+      margin: 0px;  
+
+      &.drag {
+         cursor: move;
+      }
+
+      &.edit {
+         cursor: text;
+      }
+   }
+}

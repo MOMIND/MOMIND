@@ -1,6 +1,6 @@
 import CustomTypes from '/client/lib/propTypes';
 
-export default class Node extends React.Component {
+export default class _temp extends React.Component {
 
    // --------------------------------------------------------------------- //
    // ---------------------- Class Initialization ------------------------- //
@@ -8,26 +8,21 @@ export default class Node extends React.Component {
 
    static propTypes = {
       id: CustomTypes.literal.isRequired,
-      initialText: CustomTypes.literal.isRequired,
-      parent: React.PropTypes.string,
-      creator: React.PropTypes.string,
-      initialX:React.PropTypes.number.isRequired,
-      initialY:React.PropTypes.number.isRequired,
-      onClick:React.PropTypes.func,
+      name: React.PropTypes.string.isRequired,
+   };
+
+   static defaultProps = {
+      id: 0,
+      name: '_temp'
    };
 
    constructor(props) {
       super(props);
-      this.clickHandler = this.clickHandler.bind(this, this.props.id);
+      this.clickHandler = this.clickHandler.bind(this);
    }
 
    state = {
-         dragged: false,
-         active: false,
-         status: 'drag',
-         text: this.props.initialText,
-         x: this.props.initialX,
-         y: this.props.initialY,
+      temp: false,
    };
 
    // --------------------------------------------------------------------- //
@@ -35,28 +30,31 @@ export default class Node extends React.Component {
    // --------------------------------------------------------------------- //
 
    componentWillMount() {
-      this.setDivStyle()
+      this.setDivStyle();
    }
 
    componentDidMount() {
-      $(ReactDOM.findDOMNode(this)).draggable({
-         start: (event, ui) => {
-            this.clickHandler()
-            this.setState({dragged: true});
-         },
-
-         stop: (event, ui) => {
-            this.setState({
-               dragged: false,
-               x: ui.position.left,
-               y: ui.position.top,
-            });
-         }
+      this.setState({
+         temp: true,
       });
    }
 
+   /*shouldComponentUpdate(nextProps, nextState) {
+      console.log("Should Update");
+      console.log(nextProps);
+      console.log(nextState);
+   }*/
+
    componentWillUpdate(nextProps, nextState) {
-      this.setDivStyle();
+      console.log("Will Update");
+      console.log(nextProps);
+      console.log(nextState);
+   }
+
+   componentDidUpdate(prevProps, prevState) {
+      console.log("Did Update");
+      console.log(prevProps);
+      console.log(prevState);
    }
 
    // --------------------------------------------------------------------- //
@@ -65,14 +63,8 @@ export default class Node extends React.Component {
 
    setDivStyle() {
       this.divstyle = {
-         left: this.state.x,
-         top: this.state.y,
+         display: block
       };
-   }
-
-   setActiveState(active) {
-      this.state.active = active;
-      this.forceUpdate();
    }
 
    // --------------------------------------------------------------------- //
@@ -80,7 +72,7 @@ export default class Node extends React.Component {
    // --------------------------------------------------------------------- //
 
    clickHandler() {
-      this.props.onClick(this.props.id, 'Node');
+      this.props.onClick(this);
    }
 
    // --------------------------------------------------------------------- //
@@ -88,13 +80,9 @@ export default class Node extends React.Component {
    // --------------------------------------------------------------------- //
 
    render() {
-      const dclass = "RNode" 
-         + (this.props.parent == "top" ? " root"   : "")
-         + (this.state.active          ? " active" : "");
-      const pclass = this.state.status;
+      const c = '_temp';
       return (
-         <div className={dclass} style={this.divstyle} onClick={this.clickHandler}>
-            <p className={pclass}>{this.props.id}</p>
+         <div className={c} style={this.divstyle} onClick={this.clickHandler}>
          </div>
       );
    }

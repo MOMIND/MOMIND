@@ -1,0 +1,7 @@
+{
+   "whitelist": [
+     "es7.classProperties",
+     "es7.exportExtensions"
+   ],
+   "stage": 0
+}

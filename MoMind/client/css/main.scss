@@ -30,6 +30,12 @@ $black: #272727;
    @import 'Node';
 }
 
+.RBoard {
+   @import 'Board';
+}
+
+//External Component
+@import 'BurgerMenu';
 
 // -------------------------- //
 // ------ Main Styling ------ //

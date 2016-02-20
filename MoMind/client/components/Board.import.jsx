@@ -8,7 +8,6 @@ export default class Board extends React.Component {
 
    static propTypes = {
       elementId: React.PropTypes.string,
-
    };
 
    static defaultProps = {
@@ -82,8 +81,6 @@ export default class Board extends React.Component {
             type: type,
          },
       });
-
-
    }
 
    setDefaultActiveNode() {

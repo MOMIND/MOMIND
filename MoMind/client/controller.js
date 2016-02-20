@@ -33,7 +33,7 @@ MoMindAdd = (id, name, x, y) => {//parentid missing
 
 Init = (id, name) => {
    SendAction("Init",id,name,undefined,undefined,undefined);
-   console.log(`Initialize with ${id}`);
+   console.log(`Initialize with ID ${id}`);
 }
 
 RenameNode = (id, name) => {

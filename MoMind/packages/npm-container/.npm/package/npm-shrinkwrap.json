@@ -154,6 +154,9 @@
         }
       }
     },
+    "immutable": {
+      "version": "3.7.6"
+    },
     "jquery": {
       "version": "2.2.0"
     },
@@ -525,6 +528,28 @@
     "react-prefixr": {
       "version": "0.1.0"
     },
+    "react-redux": {
+      "version": "4.4.0",
+      "dependencies": {
+        "hoist-non-react-statics": {
+          "version": "1.0.5"
+        },
+        "invariant": {
+          "version": "2.2.0"
+        },
+        "lodash": {
+          "version": "4.5.0"
+        },
+        "loose-envify": {
+          "version": "1.1.0",
+          "dependencies": {
+            "js-tokens": {
+              "version": "1.0.2"
+            }
+          }
+        }
+      }
+    },
     "react-router": {
       "version": "2.0.0",
       "dependencies": {
@@ -567,6 +592,25 @@
                   "version": "1.0.2"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "redux": {
+      "version": "3.3.1",
+      "dependencies": {
+        "lodash": {
+          "version": "4.5.0"
+        },
+        "lodash-es": {
+          "version": "4.5.0"
+        },
+        "loose-envify": {
+          "version": "1.1.0",
+          "dependencies": {
+            "js-tokens": {
+              "version": "1.0.2"
             }
           }
         }

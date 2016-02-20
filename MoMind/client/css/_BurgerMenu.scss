@@ -33,9 +33,17 @@
 
 .bm-item-list
 {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: stretch;
+   width:100%;
+
    .burger-div {
-      margin: 1.5em;
+      padding: 1em 0em;
+      margin: 0 1em;
       display:block;
+      width:90%
    }
 
    .actions {
@@ -43,9 +51,31 @@
       border-bottom: 5px solid $white;
    }
 
+   .options
+   {
+
+   }
+
+   .footer {
+      
+      #settings {
+         display: inline;
+         .svg {
+            left: 0;
+         }
+      }
+   }
+
+
+   .header {
+
+   }
+
    .header img {
       width:100px;
       margin: 0 0 0 0;
+      cursor: pointer;
+
    }
    .header span {
       margin: 0 0 0 0;
@@ -53,10 +83,11 @@
       font-size: 28px;
       color: $white;
       font-weight:800;
+      cursor: pointer;
 
-       position: relative;
-       top: 40px;
-       left: -20px;
+      position: relative;
+      top: 40px;
+      left: -20px;
    }
 
    .burger-item {
@@ -64,7 +95,41 @@
       color: $white;
       font-weight: 400;
       font-size: 22px;
-      margin: 1em 0 1em 1em;
+      padding: 0.5em 0 0.5em 0em;
+      cursor: pointer;
+
+      span {
+         position: relative;
+         left: 1em;
+      }
+
+      .svg {
+         position: relative;
+         top: 0.3em;
+         left: 0.4em;
+
+         path{
+            fill: white;
+         }
+      }
+      
+   }
+
+   .burger-item:hover {
+      font-weight: 600;
+      text-decoration: none;
+      @include prefix((
+         box-shadow: inset 10px 10px 130px -70px rgba(0,0,0,0.75),
+         border-radius: 60px 60px 60px 60px,
+      ), webkit moz);
+   }
+
+   .burger-item:active {
+      text-decoration:none;
+      @include prefix((
+         box-shadow: inset 10px 10px 155px -55px rgba(0,0,0,0.75),
+         border-radius: 60px 60px 60px 60px,
+      ), webkit moz);
    }
 }
 

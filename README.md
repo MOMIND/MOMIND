@@ -66,9 +66,13 @@ Available only on the Server.
 Loaded first, before anthing else. Loads for both if not in `/client` or `/server`.  
 *methods.js* - Methods for Server/Client. PreRun on Client, simulated on Server.  
 *collections.js* - Define Collections for Mongo/MiniMongo for Server and Client.  
+*actions.import.js* - Actions for Redux Store.  
+*propTypes.import.js* - Custom PropTypes Validators for React.  
 
 -  **/public**  
-Crawler, images, robots, fonts. Static Data. Available to the Client.  
+Crawler, images, robots, fonts. Static Data. Available to the Client. 
+*/font* - Obviously Fonts. Use them in main.scss.  
+*/img* - Images  
 
 - **/private**  
 API Keys? Static Data. Available to Server.  
@@ -86,15 +90,15 @@ Files must end in `*.import.jsx`(ES6) or `*.import.js`(ES5) and contain `default
 
 ## Environment
 #### Software
-**React.js** - Fast Frontend Javascript Library with Virtual DOM and Web Components.
-**Redux.js** - Provides a single Store for State and Data to reduce Calls and Flow. Extends classic FLux pattern and works with React.
-**Immutable.js** - Provides better Object Comparison, does not break references for new Objects and helps reducing unnecessary DOM and Component Updates
-**SASS** - Awesome CSS Extension with Functions and modular stylesheets
-**jQuery & jQuery UI** - More javascript power for everything, includes UI. Also, tons of plugins.
-**browserify.js** - Bundles javascript and works with SystemJS. Transpiles `import/export`.
-**externalify.js** - Transformer for browserify as a connection required dependencies downloaded externally or with Meteor (such as React).
-**SystemJS** - Provides Module loading (ES6+ style) and importing based on `require`.
-**Node.js** - Packagemanager and javascript "server".
+**React.js** - Fast Frontend Javascript Library with Virtual DOM and Web Components.  
+**Redux.js** - Provides a single Store for State and Data to reduce Calls and Flow. Extends classic FLux pattern and works with React.  
+**Immutable.js** - Provides better Object Comparison, does not break references for new Objects and helps reducing unnecessary DOM and Component Updates.  
+**SASS** - Awesome CSS Extension with Functions and modular stylesheets.  
+**jQuery & jQuery UI** - More javascript power for everything, includes UI. Also, tons of plugins.  
+**browserify.js** - Bundles javascript and works with SystemJS. Transpiles `import/export`.  
+**externalify.js** - Transformer for browserify as a connection required dependencies downloaded externally or with Meteor (such as React).  
+**SystemJS** - Provides Module loading (ES6+ style) and importing based on `require`.  
+**Node.js** - Packagemanager and javascript "server".  
 #### NPM
 
 `npm` and `node` with newest version, preferably without sudo, is required and recommended.  
@@ -123,7 +127,8 @@ Install the stable version of Node and make it the default one. Also install 0.1
 - Create reference in `*.browserify.js` and, if they need dependencies from Meteor, include them in `*.browserify.options.json`. Place inside `/lib`.
 
 ## Stuff
-**Licence**: [*Mozilla Public License 2.0*](http://choosealicense.com/licenses/mpl-2.0/).  
+**Licence**: [*Mozilla Public License 2.0*](http://choosealicense.com/licenses/mpl-2.0/).
+Icons by [Picol](http://www.flaticon.com/packs/picol-1/6).  
   
 **Other Projects**:  
 MotEx, a virtual reality driving school for situational awareness. [[1]](https://www.facebook.com/motexproject)[[2]](http://motexproject.at/)  

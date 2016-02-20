@@ -1,26 +1,26 @@
 export default class Link extends React.Component {
+
+   static propTypes = {
+      from: React.PropTypes.object,
+      to: React.PropTypes.object,
+      type:React.PropTypes.string,
+   };
    constructor(props) {
       super(props);
-      this.state = {
+   }
+   state = {
          beginx: 0,
          beginy: 0,
          endx: 0,
          endy: 0,
          active: false,
-      }
-   }
+   };
 
    render() {
       return (
-         <svg></svg>
+         <svg><line></line></svg>
          );
    }
-}
-
-Link.propTypes = {
-   from: React.PropTypes.object,
-   to: React.PropTypes.object,
-   type:React.PropTypes.string,
 }
 
 /*<div 

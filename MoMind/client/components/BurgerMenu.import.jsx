@@ -7,12 +7,32 @@ export default class BurgerMenu extends React.Component {
       wrapId: React.PropTypes.string,
       outerId: React.PropTypes.string,
       width: React.PropTypes.number,
+      onClickLogo: React.PropTypes.func,
+      onClickAdd: React.PropTypes.func,
+      onClickAddSub: React.PropTypes.func,
+      onClickRename: React.PropTypes.func,
+      onClickDelete: React.PropTypes.func,
+      onClickDownload: React.PropTypes.func,
+      onClickLink: React.PropTypes.func,
+      onClickSettings: React.PropTypes.func,
+      onOpenMenu: React.PropTypes.func,
+      onCloseMenu: React.PropTypes.func,
    };
 
    static defaultProps = {
       wrapId: 'page-wrap',
       outerId: 'outer-container',
       width: 250,
+      onClickLogo: () => console.log("Default Logo"),
+      onClickAdd: () => console.log("Default AddNode"),
+      onClickAddSub: () => console.log("Default AddSubNode"),
+      onClickRename: () => console.log("Default RenameNode"),
+      onClickDelete: () => console.log("Default DeleteNode"),
+      onClickDownload: () => console.log("Default DownloadPDF"),
+      onClickLink: () => console.log("Default ShareMap"),
+      onClickSettings: () => console.log("Default Settings"),
+      onOpenMenu: () => console.log("Default OpenMenu"),
+      onCloseMenu: () => console.log("Default CloseMenu"),
    };
 
    constructor(props) {
@@ -20,13 +40,14 @@ export default class BurgerMenu extends React.Component {
    }
 
    state = {
+      open: false,
    };
  
    // --------------------------------------------------------------------- //
    // -------------------------- Class Methods ---------------------------- //
    // --------------------------------------------------------------------- //
   
-     showSettings(event) {
+   showSettings(event) {
       event.preventDefault();
    }
 
@@ -58,6 +79,16 @@ export default class BurgerMenu extends React.Component {
    clickSettings = () => {
       this.props.onClickSettings();
    }
+   isMenuOpen = (state) => {
+      if(state.isOpen) {
+         this.setState({ open:true });
+         this.props.onOpenMenu();
+      } else {
+         this.setState({ open:false });
+         this.props.onCloseMenu();
+      }
+
+   }
 
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
@@ -65,7 +96,11 @@ export default class BurgerMenu extends React.Component {
 
    render() {
       return (
-         <RBurgerMenu width={this.props.width} pageWrapId={this.props.wrapId} outerContainerId={this.props.containerId}>
+         <RBurgerMenu 
+         width={this.props.width} 
+         pageWrapId={this.props.wrapId} 
+         outerContainerId={this.props.containerId}
+         onStateChange={this.isMenuOpen}>
             <div className="burger-div header">
                <img src="/img/mowe.png" alt="MoMind" onClick={this.clickLogo}/><span>MoMind</span>
             </div>

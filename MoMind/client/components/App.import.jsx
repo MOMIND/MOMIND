@@ -29,9 +29,6 @@ export default class App extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   placeHolder = () => {
-      console.log("NYI");
-   }
 
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
@@ -40,20 +37,8 @@ export default class App extends React.Component {
    render() {
       return (
          <div id="outer-container">
-            <BurgerMenu
-            onClickLogo={this.placeHolder}
-            onClickAdd={this.placeHolder}
-            onClickAddSub={this.placeHolder}
-            onClickRename={this.placeHolder}
-            onClickDelete={this.placeHolder}
-            onClickDownload={this.placeHolder}
-            onClickLink={this.placeHolder}
-            onClickSettings={this.placeHolder}
-            />
-            <Board 
-            ref={(me) => this.Board = me} 
-            elementId="page-wrap"
-            />
+            <BurgerMenu />
+            <Board ref={(me) => this.Board = me} />
          </div>
       );
   }

@@ -8,6 +8,11 @@ export default class Board extends React.Component {
 
    static propTypes = {
       elementId: React.PropTypes.string,
+
+   };
+
+   static defaultProps = {
+      elementId: 'page-wrap',
    };
 
    constructor(props) {
@@ -94,7 +99,7 @@ export default class Board extends React.Component {
       const id = node.nodeid;
       const text = node.nodetext;
       const parent = node.parentid || 'top';
-      const creator = node.localid;
+      const creator = node.localid || 'anon';
       const x = parent==='top'?0:node.x;
       const y = parent==='top'?0:node.y;
 

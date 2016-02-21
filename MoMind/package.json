@@ -24,6 +24,7 @@
   "homepage": "https://github.com/MOMIND/MOMIND#readme",
   "dependencies": {
     "externalify": "0.1.0",
+    "immutable": "3.7.6",
     "jquery": "2.2.0",
     "jquery-ui": "1.10.5",
     "jquery.panzoom": "2.0.6",
@@ -33,9 +34,13 @@
     "react-dom": "0.14.7",
     "react-mixin": "3.0.3",
     "react-prefixr": "0.1.0",
-    "react-router": "2.0.0"
+    "react-redux": "4.4.0",
+    "react-router": "2.0.0",
+    "redux": "3.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "redux-devtools": "3.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }

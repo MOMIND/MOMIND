@@ -22,3 +22,17 @@ require('jquery-ui');
 /* ---- jQuery Plugins ---- */
 /* ------------------------ */
 require('jquery.panzoom');
+
+/* ------------------------ */
+/* ------ Redux Tools ----- */
+/* ------------------------ */
+Redux = require("redux");
+CreateReduxStore = require("redux").createStore;
+CombineReduxReducers = require("redux").combineReducers;
+
+ReduxProvider = require("react-redux").Provider;
+ConnectProvider = require("react-redux").connect;
+
+IMap = require("immutable").Map;
+IList = require("immutable").List;
+is = require("immutable").is;

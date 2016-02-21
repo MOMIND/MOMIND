@@ -5,14 +5,14 @@ Meteor.methods({
       let nodeText = "MoMind";
 
       //If mapId is undefined (new map), create a new id and change url
-      if(mapId === undefined) {
+      if(mapId === null) {
          mapId = Random.id(10);
-         console.log("New MoMap");
+         console.log("Make New Map");
          window.history.pushState('MoMap' + mapId, 'MoMind', '/' + mapId);
       } else { //else get the text of the center module and prevent initial-saving
          let nodes = MoNodes.find({nodeid: mapId}).fetch();
          nodeText = nodes[0].nodetext;
-         console.log("Loaded MoMap");
+         console.log("Loaded Existing Map");
          initialSave = true;
       }
 

@@ -1,4 +1,5 @@
 import Node from '/client/components/Node';
+import {ObjectShape} from '/client/lib/actions';
 
 export default class Board extends React.Component {
 
@@ -8,19 +9,35 @@ export default class Board extends React.Component {
 
    static propTypes = {
       elementId: React.PropTypes.string,
+      onDoubleClick: React.PropTypes.func,
+      onRightClick: React.PropTypes.func,
+      onNodeDoubleClick: React.PropTypes.func,
+      onNodeRightClick: React.PropTypes.func,
+   };
+
+   static defaultProps = {
+      elementId: 'page-wrap',
+      onDoubleClick: (event, shape) => console.log("Board DoubleClick"),
+      onRightClick: (event, shape) => console.log("Board RightClick"),
+      onNodeDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
+      onNodeRightClick: (event, shade, id) => console.log("Node RightClick"),
    };
 
    constructor(props) {
       super(props);
 
       this.setActiveObject = this.setActiveObject.bind(this);
+      this.onNodeRightClick = this.onNodeRightClick.bind(this);
+      this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
    }
 
    state = {
       activeObject: {
             id: null,
-            type: null,
+            shape: null,
          },
+      bubbleDoubleClick: false,
+      bubbleRightClick: false,
    };
 
    // --------------------------------------------------------------------- //
@@ -33,16 +50,28 @@ export default class Board extends React.Component {
       };
    }
 
-   getRef(id, type) {
+   getRef(id, shape) {
       let ref = null;
 
-      if(type === 'Node') {
+      if(shape === ObjectShape.NODE) {
          ref = `noderef_${id}`;
-      } else if(type === 'Link') {
+      } else if(shape === ObjectShape.LINK) {
          ref = `linkref_${id}`;
       }
 
       return this.refs[ref];
+   }
+
+   setBubbleRightClick(bubble) {
+      this.setState({
+         bubbleRightClick: bubble,
+      });
+   }
+
+   setBubbleDoubleClick(bubble) {
+      this.setState({
+         bubbleDoubleClick: bubble,
+      });
    }
    // --------------------------------------------------------------------- //
    // ------------------------- React Lifecycle --------------------------- //
@@ -52,16 +81,19 @@ export default class Board extends React.Component {
    }
 
    componentDidMount() {
+      $(ReactDOM.findDOMNode(this)).dblclick((event) => this.onDoubleClick(event));
+
+      $(ReactDOM.findDOMNode(this)).bind("contextmenu", (event) => this.onRightClick(event));
    }
 
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   setActiveObject(id, type) 
+   setActiveObject(shape, id) 
    {
-      let oldRef = this.getRef(this.state.activeObject.id, this.state.activeObject.type);
-      let newRef = this.getRef(id, type);
+      let oldRef = this.getRef(this.state.activeObject.id, this.state.activeObject.shape);
+      let newRef = this.getRef(id, shape);
 
       if(newRef === undefined || newRef === null || oldRef === newRef)
          return;
@@ -74,15 +106,37 @@ export default class Board extends React.Component {
       this.setState({
          activeObject: {
             id: id,
-            type: type,
+            shape: shape,
          },
       });
-
-
    }
 
    setDefaultActiveNode() {
-      this.setActiveObject(mapId, 'Node');
+      this.setActiveObject(ObjectShape.NODE, mapId);
+   }
+
+   onDoubleClick() {
+      if(this.state.bubbleDoubleClick)
+         return this.setBubbleDoubleClick(false);
+      this.props.onDoubleClick(event, ObjectShape.BOARD);
+   }
+
+   onRightClick(event) {
+      if(this.state.bubbleRightClick)
+         return this.setBubbleRightClick(false);
+      this.props.onRightClick(event, ObjectShape.BOARD);
+   }
+
+   //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
+   onNodeRightClick(event, shape, id){
+      this.setBubbleRightClick(true);
+      this.props.onNodeRightClick(event, shape, id);
+   }
+
+   //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
+   onNodeDoubleClick(event, shape, id){
+      this.setBubbleDoubleClick(true);
+      this.props.onNodeDoubleClick();
    }
 
    // --------------------------------------------------------------------- //
@@ -94,7 +148,7 @@ export default class Board extends React.Component {
       const id = node.nodeid;
       const text = node.nodetext;
       const parent = node.parentid || 'top';
-      const creator = node.localid;
+      const creator = node.localid || 'anon';
       const x = parent==='top'?0:node.x;
       const y = parent==='top'?0:node.y;
 
@@ -110,6 +164,8 @@ export default class Board extends React.Component {
          initialX={x}
          initialY={y}
          onClick={this.setActiveObject}
+         onRightClick={this.onNodeRightClick}
+         onDoubleClick={this.onNodeDoubleClick}
          />
       );
 

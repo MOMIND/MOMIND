@@ -8,11 +8,13 @@ export default class Node extends React.Component {
    // --------------------------------------------------------------------- //
 
    static propTypes = {
-      id: CustomTypes.literal.isRequired,
-      initialText: CustomTypes.literal.isRequired,
+      id: CustomTypes.literal,
+      node: CustomTypes.IMap,
+      initialText: CustomTypes.literal,
       creator: CustomTypes.literal.isRequired,
       initialX:React.PropTypes.number.isRequired,
       initialY:React.PropTypes.number.isRequired,
+
       onClick:React.PropTypes.func,
       onDoubleClick: React.PropTypes.func,
       onDragStart: React.PropTypes.func,
@@ -22,17 +24,17 @@ export default class Node extends React.Component {
    };
 
    static defaultProps = {
-      onClick: (shape, id) => console.log("Node Click"),
+      onClick: (event, shape, id) => console.log("Node Click"),
       onDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
-      onDragStart: (shape, id) => console.log("Node DragStart"),
-      onDragStop: (x,y, shape, id) => console.log("Node DragStop"),
+      onDragStart: (event, shape, id) => console.log("Node DragStart"),
+      onDragStop: (event, shape, id, x, y) => console.log("Node DragStop"),
       onChangeText: (text, shape, id) => console.log("Node ChangeText"),
       onRightClick: (event, shape, id) => console.log("Node RightClick"),
    };
 
    constructor(props) {
       super(props);
-      this.clickHandler = this.clickHandler.bind(this, this.props.id);
+      this.onClick = this.onClick.bind(this, this.props.id);
    }
 
    state = {
@@ -55,11 +57,11 @@ export default class Node extends React.Component {
    componentDidMount() {
       $(ReactDOM.findDOMNode(this)).draggable({
          start: (event, ui) => {
-            this.onDragStart();
+            this.onDragStart(event);
          },
 
          stop: (event, ui) => {
-            this.onDragStop(ui.position.left, ui.position.top);
+            this.onDragStop(event, ui.position.left, ui.position.top);
          }
       });
 
@@ -68,9 +70,7 @@ export default class Node extends React.Component {
       $(ReactDOM.findDOMNode(this)).bind("contextmenu", (event) => this.onRightClick(event));
    }
 
-   componentWillUpdate(nextProps, nextState) {
-      this.setDivStyle();
-   }
+
 
    // --------------------------------------------------------------------- //
    // -------------------------- Class Methods ---------------------------- //
@@ -97,24 +97,24 @@ export default class Node extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   clickHandler() {
-      this.props.onClick(ObjectShape.NODE, this.props.id);
+   onClick() {
+      this.props.onClick(null, ObjectShape.NODE, this.props.id);
    }
 
-   onDragStart(){
-      this.clickHandler();
+   onDragStart(event){
+      this.onClick();
 
       this.setState({dragged: true});
-      this.props.onDragStart(ObjectShape.NODE, this.props.id);
+      this.props.onDragStart(event, ObjectShape.NODE, this.props.id);
    }
 
-   onDragStop(x, y){
+   onDragStop(event, x, y){
       this.setState({
          dragged: false,
          x: x,
          y: y,
       });
-      this.props.onDragStop(x, y, ObjectShape.NODE, this.props.id);
+      this.props.onDragStop(event, ObjectShape.NODE, this.props.id, x, y);
    }
 
    onDoubleClick(event) {
@@ -135,8 +135,8 @@ export default class Node extends React.Component {
          + (this.state.active          ? " active" : "");
       const pclass = this.state.status == NodeMode.DRAG ? "drag" : "edit";
       return (
-         <div className={dclass} style={this.divstyle} onClick={this.clickHandler}>
-            <p className={pclass}>{this.props.id}</p>
+         <div className={dclass} style={this.divstyle} onClick={this.onClick}>
+            <p className={pclass}>{this.state.text}</p>
          </div>
       );
    }

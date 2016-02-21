@@ -8,7 +8,7 @@ initialSave = false; //if the initial node has been saved
 saved = true; //will show client if he is uptodate/saved changes on server (not yet implemented)
 Store = null;
 
-System.import('/client/lib/reducer').then((reducer) => Store = CreateReduxStore(reducer.default));
+System.import('/client/lib/reducer').then((reducer) => Store = Redux.createStore(reducer.default));
 
 // ===========================================================
 // Hooks

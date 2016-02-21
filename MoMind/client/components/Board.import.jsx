@@ -10,30 +10,37 @@ export default class Board extends React.Component {
 
    static propTypes = {
       elementId: React.PropTypes.string,
+      onClick: React.PropTypes.func,
       onDoubleClick: React.PropTypes.func,
       onRightClick: React.PropTypes.func,
+      onNodeClick: React.PropTypes.func,
       onNodeDoubleClick: React.PropTypes.func,
       onNodeRightClick: React.PropTypes.func,
       onNewActiveObject: React.PropTypes.func,
-      nodes: CustomTypes.IList,
-      links: CustomTypes.IList,
+      nodes: CustomTypes.IMap,
+      links: CustomTypes.IMap,
+      active: CustomTypes.IMap
    };
 
    static defaultProps = {
       elementId: 'page-wrap',
+      onClick: (event, shape) => console.log("Board Click"),
       onDoubleClick: (event, shape) => console.log("Board DoubleClick"),
       onRightClick: (event, shape) => console.log("Board RightClick"),
+      onNodeClick: (event, shape, id) => console.log("Node Click"),
       onNodeDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
       onNodeRightClick: (event, shade, id) => console.log("Node RightClick"),
       onNewActiveObject: (shape, id) => console.log("New Active Object"),
-      nodes: IList([]),
-      links: IList([]),
+      nodes: IMap({}),
+      links: IMap({}),
+      active: IMap({}),
    };
 
    constructor(props) {
       super(props);
 
-      this.setActiveObject = this.setActiveObject.bind(this);
+      this.onClicked = this.onClicked.bind(this);
+      this.onNodeClick = this.onNodeClick.bind(this);
       this.onNodeRightClick = this.onNodeRightClick.bind(this);
       this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
    }
@@ -45,6 +52,7 @@ export default class Board extends React.Component {
          }),
       _bubbleDoubleClick: false,
       _bubbleRightClick: false,
+      _bubbleClick: false,
    };
 
    // --------------------------------------------------------------------- //
@@ -69,16 +77,46 @@ export default class Board extends React.Component {
       return this.refs[ref];
    }
 
-   setBubbleRightClick(bubble) {
+   setBubbleRightClick(bool) {//setState is too slow 
+      this.state._bubbleRightClick = bool;
+   }
+
+   setBubbleDoubleClick(bool) {//setState is too slow
+      this.state._bubbleDoubleClick = bool;
+   }
+
+   setBubbleClick(bool) {//setState is too slow
+      this.state._bubbleClick = bool;
+   }
+
+   setActiveObject(shape, id) 
+   {
+      let oldRef = this.getRef(this.state.active.get('id'), this.state.active.get('shape'));
+      let newRef = this.getRef(id, shape);
+
+      if(oldRef === newRef) //IF nothing changed, exit early
+         return;
+
+      if(newRef !== undefined && newRef !== null)//IF Ref is valid, eg. a Node or Link, set it Active
+         newRef.setActiveState(true);
+      else if(shape !== ObjectShape.BOARD) //IF Ref is not valid and is not a Board -> cancel
+         return;
+
+      if(oldRef !== null && oldRef !== undefined) //IF old Ref is valid, disable activeState.
+         oldRef.setActiveState(false);
+
+      this.props.onNewActiveObject(shape, id);
+
       this.setState({
-         _bubbleRightClick: bubble,
+         active: 
+            this.state.active
+                        .set('id', id)
+                        .set('shape', shape)
       });
    }
 
-   setBubbleDoubleClick(bubble) {
-      this.setState({
-         _bubbleDoubleClick: bubble,
-      });
+   setDefaultActiveNode() {
+      this.setActiveObject(ObjectShape.NODE, mapId);
    }
    // --------------------------------------------------------------------- //
    // ------------------------- React Lifecycle --------------------------- //
@@ -97,34 +135,15 @@ export default class Board extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   setActiveObject(shape, id) 
-   {
-      let oldRef = this.getRef(this.state.active.get('id'), this.state.active.get('shape'));
-      let newRef = this.getRef(id, shape);
+   onClicked() {
+      if(this.state._bubbleClick)
+         return this.setBubbleClick(false);
+      this.props.onClick(null, ObjectShape.BOARD);
 
-      if(newRef === undefined || newRef === null || oldRef === newRef)
-         return;
-
-      if(oldRef !== null && oldRef !== undefined)
-         oldRef.setActiveState(false);
-
-      newRef.setActiveState(true);
-
-      this.props.onNewActiveObject(shape, id);
-
-      this.setState({
-         active: 
-            this.state.active
-                        .set('id', id)
-                        .set('shape', shape)
-      });
+      this.setActiveObject(ObjectShape.BOARD, -1);
    }
 
-   setDefaultActiveNode() {
-      this.setActiveObject(ObjectShape.NODE, mapId);
-   }
-
-   onDoubleClick() {
+   onDoubleClick(event) {
       if(this.state._bubbleDoubleClick)
          return this.setBubbleDoubleClick(false);
       this.props.onDoubleClick(event, ObjectShape.BOARD);
@@ -137,6 +156,14 @@ export default class Board extends React.Component {
    }
 
    //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
+   onNodeClick(event, shape, id){
+      this.setBubbleClick(true);
+      this.props.onNodeClick(event, shape, id);
+
+      this.setActiveObject(shape, id);
+   }
+
+   //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
    onNodeRightClick(event, shape, id){
       this.setBubbleRightClick(true);
       this.props.onNodeRightClick(event, shape, id);
@@ -145,7 +172,7 @@ export default class Board extends React.Component {
    //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
    onNodeDoubleClick(event, shape, id){
       this.setBubbleDoubleClick(true);
-      this.props.onNodeDoubleClick();
+      this.props.onNodeDoubleClick(event, shape, id);
    }
 
    // --------------------------------------------------------------------- //
@@ -172,7 +199,7 @@ export default class Board extends React.Component {
          creator={creator}
          initialX={x}
          initialY={y}
-         onClick={this.setActiveObject}
+         onClick={this.onNodeClick}
          onRightClick={this.onNodeRightClick}
          onDoubleClick={this.onNodeDoubleClick}
          />
@@ -181,9 +208,18 @@ export default class Board extends React.Component {
       return Element;
    }
 
+   renderNode2(node, i,x) {
+      console.log(node);   
+      console.log(i); 
+      console.log(x); 
+   }
+
    render() {
       return (
-         <div id={this.props.elementId} className="RBoard">
+         <div 
+         id={this.props.elementId} 
+         className="RBoard"
+         onClick={this.onClicked}>
             {this.data.nodes.map(this.renderNode, this)}
          </div>
       );

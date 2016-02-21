@@ -27,9 +27,6 @@ require('jquery.panzoom');
 /* ------ Redux Tools ----- */
 /* ------------------------ */
 Redux = require("redux");
-CreateReduxStore = require("redux").createStore;
-CombineReduxReducers = require("redux").combineReducers;
-
 ReduxProvider = require("react-redux").Provider;
 ConnectProvider = require("react-redux").connect;
 

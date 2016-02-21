@@ -11,13 +11,13 @@ Meteor.methods({
       const moMapId = urlId;
 
       if(moMapId === "")
-         return undefined;
+         return null;
 
       const moFound = MoMaps.find({mapid: moMapId});
 
       if(moFound.count() === 1)   
          return moFound.fetch()[0].mapid;
 
-      return undefined;
+      return null;
    }
 });

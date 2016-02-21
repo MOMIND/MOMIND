@@ -4,8 +4,9 @@ A free, beautiful and leightweight mind map app for instant collaboration in Met
 ##Table of Contents
 - [Use](#use)
 - [Architecture](#architecture)
-      - [Redux Actions](#redux-actions)
+      - [Redux](#redux)
       - [Server Structure](#server-structure)
+      - [Browser Extensions](#browser-extensions)
       - [Coding Hints](#coding-hints)
       - [Folders](#folders)
 - [Environment](#environment)
@@ -23,13 +24,33 @@ A free, beautiful and leightweight mind map app for instant collaboration in Met
 
 ## Architecture
 
-#### Redux Actions
-Where (files, code), Which (actions),
-server
+#### [Redux](http://redux.js.org/docs/basics/index.html)
+The State of the App is saved at a single place, in `Store`, which the `<App>` connects to. All actions which can manipualte the store are defined in `client/lib/actions.import.js` and for every Action there is a Method (a ActionCreator) and a Constant (a Identifier). Every Action is then exported and can be used from `<App>` as `this.props.Actions.action`.  
+The State can be accesed from various variables bound as props to `<App>`. These are either defined as a variable, [IList (Immutable List/Array)](https://facebook.github.io/immutable-js/docs/#/List) or [IMap (Immutable List/Map)](https://facebook.github.io/immutable-js/docs/#/Map) from *Immutable.js*.  
+Accessing state, mutating state and executing Actions should only happen in `<App>`, as the child components are merely presentational.  
+How Actions affect the State is defined in the reducers in `client/lib/reducer.import.js`
+##### Actions
+- AddNode(id, text, x, y, root, creator)
+- AddSubNode(id, text, x, y, parent, creator)
+- RenameNode(id, text)
+- MoveNode(id, x, y)
+- DeleteNode(id)
+- ChangeNodeMode(id, mode)
+- CreateLink(parent, child, mode, id)
+- RemoveLink(id)
+- RemoveLinkByNode(nodeid)
+- SetMapId(id)
+- SetCreatorId(id)
+- SetActiveObject(ref, shape)
 
 ####Server Structure
 meteor how, what, flow
 db how what, structure
+
+####Browser Extensions  
+- [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension#implementation) for Google Chrome/Chromium  
+- [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) for Google Chrome/Chromium  
+- [React Detector](https://chrome.google.com/webstore/detail/react-detector/jaaklebbenondhkanegppccanebkdjlh) for Google Chrome/Chromium  
 
 #### Coding Hints
 - Use ES6/7 for js and jsx files. 
@@ -53,8 +74,8 @@ Available only on the Client.
 *client.js* - Client Code (eg. Startup, Browser, Window, Current User)  
 *methods.js* - Client-Only Methods and Server Methods Stubs  
 *controller.js* - Formerly 'public/client.js'. Interface between Front/Backend.  Defines Globals (for Client). Could be deprecated in future.  
-*/css/main.scss* - SASS Folder with 'Entrypoint' for all Style. Component Styling goes in new file `Component.scss`.  
-*/lib/* - Loads before anything else. Contains `browserify` for Dependencies and Imports like React Components.
+*/css/main.scss* - SASS Folder with 'Entrypoint' for all Style. Component Styling goes in new file `_Component.scss`.  
+*/lib/* - Loads before anything else. Contains `browserify` for Dependencies and Imports like React Components. Contains Reduxer Reducer and Actions.  
 
 - **/server**  
 Available only on the Server.  
@@ -91,8 +112,8 @@ Files must end in `*.import.jsx`(ES6) or `*.import.js`(ES5) and contain `default
 ## Environment
 #### Software
 **React.js** - Fast Frontend Javascript Library with Virtual DOM and Web Components.  
-**Redux.js** - Provides a single Store for State and Data to reduce Calls and Flow. Extends classic FLux pattern and works with React.  
-**Immutable.js** - Provides better Object Comparison, does not break references for new Objects and helps reducing unnecessary DOM and Component Updates.  
+**Redux.js** - Provides a single Store for State and Data to reduce Calls and Flow. Extends classic FLux pattern and works with React. Redux is pure and the Reducers and Actions are stateless.
+**Immutable.js** - Provides better Object Comparison, does not break references for new Objects and helps reducing unnecessary DOM and Component Updates. A Change to an Immutable returns always a exact copy with the changed attribute. If nohing was really changed, reference is not broken.  
 **SASS** - Awesome CSS Extension with Functions and modular stylesheets.  
 **jQuery & jQuery UI** - More javascript power for everything, includes UI. Also, tons of plugins.  
 **browserify.js** - Bundles javascript and works with SystemJS. Transpiles `import/export`.  
@@ -132,5 +153,5 @@ Icons by [Picol](http://www.flaticon.com/packs/picol-1/6).
   
 **Other Projects**:  
 MotEx, a virtual reality driving school for situational awareness. [[1]](https://www.facebook.com/motexproject)[[2]](http://motexproject.at/)  
-Street Justice, a reckless, brutal and over-correct police car [[1]](https://www.facebook.com/streetjusticeat/)[[2]](http://www.streetjustice.at/) 
+Street Justice, a reckless, brutal and over-correct police car. [[1]](https://www.facebook.com/streetjusticeat/)[[2]](http://www.streetjustice.at/) 
 

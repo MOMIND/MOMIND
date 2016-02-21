@@ -28,7 +28,7 @@ function LoadReact() {
   System.import('/client/components/App').then(function(module) {
     const AppModule = module.default;
 
-    let App = React.createElement(AppModule);
+    let App = React.createElement(AppModule, {store: Store});
     let Element = ReactDOM.render(App, document.getElementById('app'));
     console.log('Client React Ready');
 

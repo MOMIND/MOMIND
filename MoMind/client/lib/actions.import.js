@@ -13,7 +13,7 @@ function ActionCreator(type, ...argNames) {
 // ------------------- Node Manipulation ---------------------- //
 // ------------------------------------------------------------ //
 
-const ADD_NODE = 'ADD_NODE'; //ACTION: Add a Node to the Mindmap
+const ADD_NODE = 'ADD_NODE'; //ACTION: Add a free Node to the Mindmap, root is special styling 
 const AddNode = ActionCreator(ADD_NODE, 'id', 'text', 'x', 'y', 'root', 'creator');
 
 const ADD_SUBNODE = 'ADD_SUBNODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
@@ -57,7 +57,7 @@ const SET_ACTIVE_OBJECT = 'SET_ACTIVE_OBJECT'; //ACTION: Set Reference and Type 
 const SetActiveObject = ActionCreator(SET_ACTIVE_OBJECT, 'ref', 'shape');
 
 // ------------------------------------------------------------ //
-// -------------------- Type Constants ------------------------ //
+// -------------------- Export Constants ---------------------- //
 // ------------------------------------------------------------ //
 
 export const ObjectShape = {

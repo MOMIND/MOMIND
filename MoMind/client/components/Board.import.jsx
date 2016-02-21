@@ -39,7 +39,7 @@ export default class Board extends React.Component {
    constructor(props) {
       super(props);
 
-      this.onClicked = this.onClicked.bind(this);
+      this.onClick = this.onClick.bind(this);
       this.onNodeClick = this.onNodeClick.bind(this);
       this.onNodeRightClick = this.onNodeRightClick.bind(this);
       this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
@@ -135,7 +135,7 @@ export default class Board extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   onClicked() {
+   onClick() {
       if(this.state._bubbleClick)
          return this.setBubbleClick(false);
       this.props.onClick(null, ObjectShape.BOARD);
@@ -179,10 +179,10 @@ export default class Board extends React.Component {
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
 
-   renderNode(node, i) {
-      const dbId = node._id;
-      const id = node.nodeid;
-      const text = node.nodetext;
+   renderNodePlain(node, i) {
+      const dbId = node._id || 'x';
+      const id = node.nodeid || 'x';
+      const text = node.nodetext || 'New Node';
       const parent = node.parentid || 'top';
       const creator = node.localid || 'anon';
       const x = parent==='top'?0:node.x;
@@ -208,10 +208,21 @@ export default class Board extends React.Component {
       return Element;
    }
 
-   renderNode2(node, i,x) {
-      console.log(node);   
-      console.log(i); 
-      console.log(x); 
+   renderNode(value, i) {
+      let element = (
+         <Node
+         ref= {'noderef_'+value[0]}
+         index={i}
+         key={i}
+         node={value[1]}
+         id={value[0]}
+         onClick={this.onNodeClick}
+         onRightClick={this.onNodeRightClick}
+         onDoubleClick={this.onNodeDoubleClick}
+         />
+      );
+
+      return element;
    }
 
    render() {
@@ -219,8 +230,8 @@ export default class Board extends React.Component {
          <div 
          id={this.props.elementId} 
          className="RBoard"
-         onClick={this.onClicked}>
-            {this.data.nodes.map(this.renderNode, this)}
+         onClick={this.onClick}>
+            {this.props.nodes.entrySeq().map(this.renderNode, this)}
          </div>
       );
    }

@@ -31,7 +31,7 @@ function MoNodesReducer(state = IMap({}), action) {
          });
          return state.set(action.id, obj);
       case ActionConstants.ADD_SUBNODE:
-         return state;
+         return state; //NYI
       case ActionConstants.RENAME_NODE:
          return state.setIn([action.id, 'text'], action.text);
       case ActionConstants.MOVE_NODE:

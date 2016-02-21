@@ -10,10 +10,6 @@ export default class Node extends React.Component {
    static propTypes = {
       id: CustomTypes.literal,
       node: CustomTypes.IMap,
-      initialText: CustomTypes.literal,
-      creator: CustomTypes.literal.isRequired,
-      initialX:React.PropTypes.number.isRequired,
-      initialY:React.PropTypes.number.isRequired,
 
       onClick:React.PropTypes.func,
       onDoubleClick: React.PropTypes.func,
@@ -41,9 +37,11 @@ export default class Node extends React.Component {
       dragged: false,
       active: false,
       status: NodeMode.DRAG,
-      text: this.props.initialText,
-      x: this.props.initialX,
-      y: this.props.initialY,
+      creator:this.props.node.get('creator'),
+      root:this.props.node.get('root'),
+      text: this.props.node.get('text'),
+      x: this.props.node.get('x'),
+      y: this.props.node.get('y'),
    };
 
    // --------------------------------------------------------------------- //
@@ -131,8 +129,8 @@ export default class Node extends React.Component {
 
    render() {
       const dclass = "RNode" 
-         + (this.props.parent == "top" ? " root"   : "")
-         + (this.state.active          ? " active" : "");
+         + (this.state.root   ? " root"   : "")
+         + (this.state.active ? " active" : "");
       const pclass = this.state.status == NodeMode.DRAG ? "drag" : "edit";
       return (
          <div className={dclass} style={this.divstyle} onClick={this.onClick}>

@@ -40,17 +40,17 @@ class App extends React.Component {
       };
    }
 
-   testing(event) {
+   RightClickMenu(event) {
       event.preventDefault();
 
-      $("<div class='custom-menu'>Custom Menu</div>")
+      $("<div class='custom-menu'>MoMind Menu</div>")
         .appendTo("body")
         .css({top: event.pageY + "px", left: event.pageX + "px"});
    }
 
    StoreTest() {
-      console.log(Store.getState().toJSON());
-      let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
+      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
+      let unsubscribe = Store.subscribe();
 
       console.assert(IMap.isMap(Store.getState().get('nodes')) === true, "Nodes not a Map" );
       console.assert(IMap.isMap(Store.getState().get('links')) === true, "Links not a Map" );
@@ -80,7 +80,6 @@ class App extends React.Component {
       
       Store.dispatch(Actions.RenameNode('a1', 'Renamed'));
       console.assert(Store.getState().getIn(['nodes', 'a1']).get('text')==='Renamed', "Rename Node" );
-      
 
       unsubscribe();
    }
@@ -94,15 +93,29 @@ class App extends React.Component {
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
 
+   renderBoard() {
+      return (
+         <BurgerMenu 
+         />
+      );
+   }
+
+   renderMenu() {
+      return (
+         <Board 
+            ref={(me) => this.Board = me} 
+            nodes = {this.props.nodes}
+            links = {this.props.links}
+            active = {this.props.active}
+         />
+      );
+   }
+
    render() {
       return (
          <div id="outer-container">
-            <BurgerMenu />
-            <Board 
-               ref={(me) => this.Board = me} 
-               nodes = {null}
-               links = {null}
-               active = {null}/>
+           {this.renderMenu()}
+           {this.renderBoard()}
          </div>
       );
   }

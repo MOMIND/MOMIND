@@ -51,14 +51,14 @@ export default class App extends React.Component {
       Store.dispatch(Actions.SetMapId(mapId));
       Store.dispatch(Actions.SetCreatorId(localId));
       let creator = Store.getState().getIn(['moment', 'userId']);
-      Store.dispatch(Actions.AddNode('1', 'Test1', '10', '10', true, creator));
-      Store.dispatch(Actions.AddNode('2', 'Test2', '5', '5', true, creator));
-      Store.dispatch(Actions.AddNode('3', 'Test3', '5', '5', true, creator));
-      Store.dispatch(Actions.AddNode('4', 'Test4', '5', '5', true, creator));
+      Store.dispatch(Actions.AddNode('a1', 'Test1', 10, 10, true, creator));
+      Store.dispatch(Actions.AddNode('a2', 'Test2', 100, 100, true, creator));
+      Store.dispatch(Actions.AddNode('a3', 'Test3', 50, 50, true, creator));
+      Store.dispatch(Actions.AddNode('a4', 'Test4', 25, 25, false, creator));
       
-      Store.dispatch(Actions.MoveNode('3', 200, 100));
-      Store.dispatch(Actions.DeleteNode('2'));
-      Store.dispatch(Actions.RenameNode('1', 'Renamed'));
+      Store.dispatch(Actions.MoveNode('a3', 200, 100));
+      Store.dispatch(Actions.DeleteNode('a2'));
+      Store.dispatch(Actions.RenameNode('a1', 'Renamed'));
 
 
       unsubscribe();

@@ -1,5 +1,6 @@
 import Node from '/client/components/Node';
-import {ObjectShape} from '/client/lib/actions';
+import CustomTypes from '/client/lib/propTypes';
+import {ObjectShape, NodeMode, LinkMode} from '/client/lib/actions';
 
 export default class Board extends React.Component {
 
@@ -13,6 +14,9 @@ export default class Board extends React.Component {
       onRightClick: React.PropTypes.func,
       onNodeDoubleClick: React.PropTypes.func,
       onNodeRightClick: React.PropTypes.func,
+      onNewActiveObject: React.PropTypes.func,
+      nodes: CustomTypes.IList,
+      links: CustomTypes.IList,
    };
 
    static defaultProps = {
@@ -21,6 +25,9 @@ export default class Board extends React.Component {
       onRightClick: (event, shape) => console.log("Board RightClick"),
       onNodeDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
       onNodeRightClick: (event, shade, id) => console.log("Node RightClick"),
+      onNewActiveObject: (shape, id) => console.log("New Active Object"),
+      nodes: IList([]),
+      links: IList([]),
    };
 
    constructor(props) {
@@ -32,12 +39,12 @@ export default class Board extends React.Component {
    }
 
    state = {
-      activeObject: {
+      active: IMap({
             id: null,
             shape: null,
-         },
-      bubbleDoubleClick: false,
-      bubbleRightClick: false,
+         }),
+      _bubbleDoubleClick: false,
+      _bubbleRightClick: false,
    };
 
    // --------------------------------------------------------------------- //
@@ -64,13 +71,13 @@ export default class Board extends React.Component {
 
    setBubbleRightClick(bubble) {
       this.setState({
-         bubbleRightClick: bubble,
+         _bubbleRightClick: bubble,
       });
    }
 
    setBubbleDoubleClick(bubble) {
       this.setState({
-         bubbleDoubleClick: bubble,
+         _bubbleDoubleClick: bubble,
       });
    }
    // --------------------------------------------------------------------- //
@@ -92,7 +99,7 @@ export default class Board extends React.Component {
 
    setActiveObject(shape, id) 
    {
-      let oldRef = this.getRef(this.state.activeObject.id, this.state.activeObject.shape);
+      let oldRef = this.getRef(this.state.active.get('id'), this.state.active.get('shape'));
       let newRef = this.getRef(id, shape);
 
       if(newRef === undefined || newRef === null || oldRef === newRef)
@@ -103,11 +110,13 @@ export default class Board extends React.Component {
 
       newRef.setActiveState(true);
 
+      this.props.onNewActiveObject(shape, id);
+
       this.setState({
-         activeObject: {
-            id: id,
-            shape: shape,
-         },
+         active: 
+            this.state.active
+                        .set('id', id)
+                        .set('shape', shape)
       });
    }
 
@@ -116,13 +125,13 @@ export default class Board extends React.Component {
    }
 
    onDoubleClick() {
-      if(this.state.bubbleDoubleClick)
+      if(this.state._bubbleDoubleClick)
          return this.setBubbleDoubleClick(false);
       this.props.onDoubleClick(event, ObjectShape.BOARD);
    }
 
    onRightClick(event) {
-      if(this.state.bubbleRightClick)
+      if(this.state._bubbleRightClick)
          return this.setBubbleRightClick(false);
       this.props.onRightClick(event, ObjectShape.BOARD);
    }

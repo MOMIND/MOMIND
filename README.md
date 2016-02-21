@@ -53,8 +53,8 @@ Available only on the Client.
 *client.js* - Client Code (eg. Startup, Browser, Window, Current User)  
 *methods.js* - Client-Only Methods and Server Methods Stubs  
 *controller.js* - Formerly 'public/client.js'. Interface between Front/Backend.  Defines Globals (for Client). Could be deprecated in future.  
-*/css/main.scss* - SASS Folder with 'Entrypoint' for all Style. Component Styling goes in new file `Component.scss`.  
-*/lib/* - Loads before anything else. Contains `browserify` for Dependencies and Imports like React Components.
+*/css/main.scss* - SASS Folder with 'Entrypoint' for all Style. Component Styling goes in new file `_Component.scss`.  
+*/lib/* - Loads before anything else. Contains `browserify` for Dependencies and Imports like React Components. Contains Reduxer Reducer and Actions
 
 - **/server**  
 Available only on the Server.  

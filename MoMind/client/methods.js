@@ -1,4 +1,4 @@
-let nodePointer = undefined; //Observer Pointer 
+let nodePointer = null; //Observer Pointer 
 
 Meteor.methods({
    InitMoMap() { //Method Call when MoMindReady is received at client.js

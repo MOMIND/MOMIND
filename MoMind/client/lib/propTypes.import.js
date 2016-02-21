@@ -29,6 +29,28 @@ function literalChecker(props, propName, componentName) {
    return null;
 }
 
+//Validates for iList
+function iListChecker(props, propName, componentName) {
+  componentName = componentName || ANONYMOUS;
+
+   if (!IList.isList(props[propName]))
+      return new Error(`The Prop ${propName} must be a immutable List (Array) but is a ${type}!`);
+
+   return null;
+}
+
+//Validates for iList
+function iMapChecker(props, propName, componentName) {
+  componentName = componentName || ANONYMOUS;
+
+   if (!IMap.isMap(props[propName]))
+      return new Error(`The Prop ${propName} must be a immutable Map (Object) but is a ${type}!`);
+
+   return null;
+}
+
 export default {
   literal: createChainableTypeChecker(literalChecker),
+  IMap: createChainableTypeChecker(iMapChecker),
+  IList: createChainableTypeChecker(iListChecker),
 };

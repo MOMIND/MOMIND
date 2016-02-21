@@ -40,7 +40,23 @@ $black: #272727;
 // -------------------------- //
 // ------ Main Styling ------ //
 // -------------------------- //
+
+#app, #outer-container, .RBoard {
+   height:100%;
+   width: 100%;
+}
+
 body {
    font-family: "SSP";
    background-color: $light-grey;
+   width:3000px;
+   height: 3000px;
+}
+
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    background-color:#C0C0C0;
+    border: 1px solid black;
+    padding: 2px;
 }

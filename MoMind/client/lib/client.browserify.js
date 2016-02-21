@@ -35,3 +35,4 @@ ConnectProvider = require("react-redux").connect;
 
 IMap = require("immutable").Map;
 IList = require("immutable").List;
+is = require("immutable").is;

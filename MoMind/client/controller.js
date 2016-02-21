@@ -1,11 +1,16 @@
+
+
 // ===========================================================
 // Globals
 // ===========================================================
 
-mapId = undefined; //Id of this Node is the MapId and the URL
-localId = undefined; //A UserId, tied to LocalStorage
+mapId = null; //Id of this Node is the MapId and the URL
+localId = null; //A UserId, tied to LocalStorage
 initialSave = false; //if the initial node has been saved
 saved = true; //will show client if he is uptodate/saved changes on server (not yet implemented)
+Store = null;
+
+System.import('/client/lib/reducer').then((reducer) => Store = CreateReduxStore(reducer.default));
 
 // ===========================================================
 // Hooks
@@ -80,7 +85,7 @@ CreatedChange = (action, params) =>
 
    saved = false;
 
-   if(mapId != undefined && initialSave != true)
+   if(mapId != null && initialSave != true)
    {
       console.log(`Saved MoMap ${mapId}`);
       Meteor.call('SaveInitialNode', mapId, "MoMind", localId,

@@ -13,61 +13,71 @@ function ActionCreator(type, ...argNames) {
 // ------------------- Node Manipulation ---------------------- //
 // ------------------------------------------------------------ //
 
-const ADD_NODE = 'ADD_NODE'; //ACTION: Add a Node to the Mindmap
-export const AddNode = ActionCreater(ADD_NODE, 'id', 'text', 'x', 'y', 'root', 'creator');
+export const ADD_NODE = 'ADD_NODE'; //ACTION: Add a Node to the Mindmap
+export const AddNode = ActionCreator(ADD_NODE, 'id', 'text', 'x', 'y', 'root', 'creator');
 
-const ADD_SUBNODE = 'ADD_SUBNODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
-export const AddSubNode = ActionCreater(ADD_SUBNODE, 'id', 'text', 'x', 'y', 'parent', 'creator');
+export const ADD_SUBNODE = 'ADD_SUBNODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
+export const AddSubNode = ActionCreator(ADD_SUBNODE, 'id', 'text', 'x', 'y', 'parent', 'creator');
 
-const RENAME_NODE = 'RENAME_NODE'; //ACTION: Change the displayed name of the Node
-export const RenameNode = ActionCreater(RENAME_NODE, 'id', 'text');
+export const RENAME_NODE = 'RENAME_NODE'; //ACTION: Change the displayed name of the Node
+export const RenameNode = ActionCreator(RENAME_NODE, 'id', 'text');
 
-const MOVE_NODE = 'MOVE_NODE'; //ACTION: Update the position of the node
-export const MoveNode = ActionCreater(MOVE_NODE, 'id', 'x', 'y');
+export const MOVE_NODE = 'MOVE_NODE'; //ACTION: Update the position of the node
+export const MoveNode = ActionCreator(MOVE_NODE, 'id', 'x', 'y');
 
-const DELETE_NODE = 'DELETE_NODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
-export const DeleteNode = ActionCreater(DELETE_NODE, 'id');
+export const DELETE_NODE = 'DELETE_NODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
+export const DeleteNode = ActionCreator(DELETE_NODE, 'id');
+
+export const CHANGE_NODE_MODE = 'CHANGE_NODE_MODE'; //ACTION: Change the mode of a node
+export const ChangeNodeMode = ActionCreator(CHANGE_NODE_MODE, 'id', 'mode');
 
 // ------------------------------------------------------------ //
 // ------------------- Link Manipulation ---------------------- //
 // ------------------------------------------------------------ //
-const CREATE_LINK = 'CREATE_LINK'; //ACTION: Create a Link between two nodes
-export const CreateLink = ActionCreater(CREATE_LINK, 'parent', 'child', 'type', 'id');
+export const CREATE_LINK = 'CREATE_LINK'; //ACTION: Create a Link between two nodes
+export const CreateLink = ActionCreator(CREATE_LINK, 'parent', 'child', 'mode', 'id');
 
-const REMOVE_LINK = 'REMOVE_LINK'; //ACTION: Remove a Link by Id
-export const RemoveLink = ActionCreater(REMOVE_LINK, 'id');
+export const REMOVE_LINK = 'REMOVE_LINK'; //ACTION: Remove a Link by Id
+export const RemoveLink = ActionCreator(REMOVE_LINK, 'id');
 
-const REMOVE_LINK_BY_NODE = 'REMOVE_LINK_BY_NODE'; //ACTION: Remove every Link with this Id as a Child or Parent
-export const RemoveLinkByNode = ActionCreater(REMOVE_LINK_BY_NODE, 'nodeid');
+export const REMOVE_LINK_BY_NODE = 'REMOVE_LINK_BY_NODE'; //ACTION: Remove every Link with this Id as a Child or Parent
+export const RemoveLinkByNode = ActionCreator(REMOVE_LINK_BY_NODE, 'nodeid');
 
 
 // ------------------------------------------------------------ //
 // ------------------- State Manipulation --------------------- //
 // ------------------------------------------------------------ //
 
-const SET_MAPID = 'SET_MAPID'; //ACTION: Set ID of this Map in State
-export const SetMapId = ActionCreater(SET_MAPID, 'id');
+export const SET_MAPID = 'SET_MAPID'; //ACTION: Set ID of this Map in State
+export const SetMapId = ActionCreator(SET_MAPID, 'id');
 
-const SET_CREATOR_ID = 'SET_CREATOR_ID'; //ACTION: Set Id for the Curent Semi-User in State
-export const SetCreatorId = ActionCreater(SET_CREATOR_ID, 'id');
+export const SET_CREATORID = 'SET_CREATORID'; //ACTION: Set Id for the Curent Semi-User in State
+export const SetCreatorId = ActionCreator(SET_CREATORID, 'id');
 
-const SET_ACTIVE_OBJECT = 'SET_ACTIVE_OBJECT'; //ACTION: Set Reference and Type of Active Object
-export const SetActiveObject = ActionCreater(SET_ACTIVE_OBJECT, 'ref', 'type');
+export const SET_ACTIVE_OBJECT = 'SET_ACTIVE_OBJECT'; //ACTION: Set Reference and Type of Active Object
+export const SetActiveObject = ActionCreator(SET_ACTIVE_OBJECT, 'ref', 'shape');
 
 // ------------------------------------------------------------ //
 // -------------------- Type Constants ------------------------ //
 // ------------------------------------------------------------ //
 
-export const ActiveObjectTypes = {
+export const ObjectShape = {
    NODE: 'NODE',
-   LINK: 'LINK'
+   LINK: 'LINK',
+   BOARD: 'BOARD',
+   NULL: null
 };
 
-export const LinkTypes = {
+export const LinkMode = {
    FULL: 'FULL',
-   DOTTED: 'DOTTED'
+   DOTTED: 'DOTTED',
+   NULL: null
 };
 
+export const NodeMode = {
+   'DRAG': 'DRAG',
+   'EDIT': 'EDIT'
+}
 
 /*Template:
 export function AddNode(id, text, x, y) {

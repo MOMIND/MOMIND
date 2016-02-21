@@ -5,7 +5,7 @@ Meteor.methods({
       let nodeText = "MoMind";
 
       //If mapId is undefined (new map), create a new id and change url
-      if(mapId === undefined) {
+      if(mapId === null) {
          mapId = Random.id(10);
          console.log("Make New Map");
          window.history.pushState('MoMap' + mapId, 'MoMind', '/' + mapId);

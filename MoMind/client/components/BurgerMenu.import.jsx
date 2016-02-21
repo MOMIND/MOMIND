@@ -51,6 +51,14 @@ export default class BurgerMenu extends React.Component {
       event.preventDefault();
    }
 
+   openMenu() {
+      this.setState({ open: true });
+   }
+
+   closeMenu() {
+      this.setState({ open: false });
+   }
+
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
@@ -100,7 +108,8 @@ export default class BurgerMenu extends React.Component {
          width={this.props.width} 
          pageWrapId={this.props.wrapId} 
          outerContainerId={this.props.containerId}
-         onStateChange={this.isMenuOpen}>
+         onStateChange={this.isMenuOpen}
+         isOpen={this.state.open}>
             <div className="burger-div header">
                <img src="/img/mowe.png" alt="MoMind" onClick={this.clickLogo}/><span>MoMind</span>
             </div>

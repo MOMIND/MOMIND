@@ -154,6 +154,7 @@ Install the stable version of Node and make it the default one. Also install 0.1
 
 ## Stuff
 **Licence**: [*Mozilla Public License 2.0*](http://choosealicense.com/licenses/mpl-2.0/).
+Commercial Use and Hosting on a public server is prohibited. Please make use of Pull Request or use this repo as a learning aid.
 Icons by [Picol](http://www.flaticon.com/packs/picol-1/6).  
   
 **Other Projects**:  

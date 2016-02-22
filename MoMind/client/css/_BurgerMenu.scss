@@ -5,6 +5,9 @@
   height: 30px;
   left: 36px;
   top: 36px;
+  @include prefix((
+      user-select: none 
+   ),webkit moz ms khtml);
 }
 
 //Color and Shape of Burger Button
@@ -25,6 +28,7 @@
 
 //General Sidebar Style
 .bm-menu{
+
 }
 
 .bm-menu-wrap {

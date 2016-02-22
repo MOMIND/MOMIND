@@ -1,9 +1,9 @@
 /* ------------------------ */
 /* ---- React Classes ----- */
 /* ------------------------ */
-RRouter = require("react-router"); //For Routing
+//RRouter = require("react-router"); //For Routing
 RMixIn = require("react-mixin"); //Instead of Meteor Data
-$P = require("react-prefixr"); //Prefixes CSS Strings in .jsx for Brwoser Support
+//$P = require("react-prefixr"); //Prefixes CSS Strings in .jsx for Brwoser Support
 
 /* ------------------------ */
 /* --- React Components --- */
@@ -21,7 +21,7 @@ require('jquery-ui');
 /* ------------------------ */
 /* ---- jQuery Plugins ---- */
 /* ------------------------ */
-require('jquery.panzoom');
+//require('jquery.panzoom');
 
 /* ------------------------ */
 /* ------ Redux Tools ----- */

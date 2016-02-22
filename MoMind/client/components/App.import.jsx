@@ -1,6 +1,7 @@
 import Board from '/client/components/Board';
 import BurgerMenu from '/client/components/BurgerMenu';
 import {ActionMethods, ObjectShape} from '/client/lib/actions';
+import RightClickMenu from '/client/components/RightClickMenu';
 
 class App extends React.Component {
 
@@ -15,6 +16,7 @@ class App extends React.Component {
    state = {
 
    };
+
    static defaultProps = {
       store: Store,
    };
@@ -24,10 +26,6 @@ class App extends React.Component {
    // --------------------------------------------------------------------- //
 
    componentDidMount() {
-      $(document).bind("click", (event) => $("div.custom-menu").hide());
-
-
-      //this.StoreTest();
    }
 
    // --------------------------------------------------------------------- //
@@ -40,52 +38,7 @@ class App extends React.Component {
       };
    }
 
-   RightClickMenu(event) {
-      event.preventDefault();
-
-      $("<div class='custom-menu'>MoMind Menu</div>")
-        .appendTo("body")
-        .css({top: event.pageY + "px", left: event.pageX + "px"});
-   }
-
-   StoreTest() {
-      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
-
-      console.assert(IMap.isMap(Store.getState().get('nodes')) === true, "Nodes not a Map" );
-      console.assert(IMap.isMap(Store.getState().get('links')) === true, "Links not a Map" );
-      console.assert(IMap.isMap(Store.getState().get('moment')) === true, "Moment not a Map" );
-      console.assert(IMap.isMap(Store.getState().getIn(['moment', 'active'])) === true, "Active not a Map" );
-
-      Store.dispatch(ActionMethods.SetMapId(mapId));
-      console.assert(Store.getState().getIn(['moment', 'mapId'])===mapId, "Set MapId" );
-
-      Store.dispatch(ActionMethods.SetCreatorId(localId));
-      let creator = Store.getState().getIn(['moment', 'userId']);
-      console.assert(creator===localId, "Set Creator" );
-      
-      Store.dispatch(ActionMethods.AddNode('a1', 'Test1', 10, 10, true, creator));
-      Store.dispatch(ActionMethods.AddNode('a2', 'Test2', 100, 100, true, creator));
-      Store.dispatch(ActionMethods.AddNode('a3', 'Test3', 500, 500, true, creator));
-      Store.dispatch(ActionMethods.AddNode('a4', 'Test4', 250, 250, false, creator));
-      console.assert(Store.getState().getIn(['nodes']).size===4, "Add Nodes" );
-      console.assert(IMap.isMap(Store.getState().getIn(['nodes', 'a4'])) === true, "Node not a Map" );
-      
-      Store.dispatch(ActionMethods.MoveNode('a3', 200, 100));
-      console.assert(Store.getState().getIn(['nodes', 'a3']).get('x')===200, "Set X" );
-      console.assert(Store.getState().getIn(['nodes', 'a3']).get('y')===100, "Set Y" );
-      
-      Store.dispatch(ActionMethods.DeleteNode('a2'));
-      console.assert(Store.getState().getIn(['nodes', 'a2']) === undefined, "Delete Node" );
-      
-      Store.dispatch(ActionMethods.RenameNode('a1', 'Renamed'));
-      console.assert(Store.getState().getIn(['nodes', 'a1']).get('text')==='Renamed', "Rename Node" );
-
-      Store.dispatch(ActionMethods.ResetState());
-      console.log("Test Finished");
-      //unsubscribe();
-   }
-
-   StoreComponentTest() {
+   StoreAssertTest() {
       //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
 
       console.assert(IMap.isMap(this.props.nodes), "Nodes not a Map" );
@@ -121,31 +74,111 @@ class App extends React.Component {
       //unsubscribe();
    }
 
+   mapRefToNode() {
+      const ref = this.props.active.get('ref');
+
+      if(this.isRef(ObjectShape.NODE))
+         return ref;
+      return false;
+   }
+
+   mapRefToLink() {
+      const ref = this.props.active.get('ref');
+
+      if(this.isRef(ObjectShape.LINK))
+         return ref;
+      return false;
+   }
+
+   isRef(shape){
+      const s = this.props.active.get('shape');
+
+      if(s === shape)
+         return true;
+      return false;
+   }
+
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
+
+   // ------------------------- Context Handler --------------------------- //
+   // 
+   openContextMenu = (event, shape, id) => {
+      event.preventDefault();
+
+      this.ContextMenu.setContext(shape, id);
+      this.ContextMenu.showMenu();
+
+      $(ReactDOM.findDOMNode(this.ContextMenu))
+         .css({top: event.pageY + "px", left: event.pageX + "px"});
+   }
+
+   closeContextMenu = () => {
+      this.ContextMenu.hideMenu();
+   }
+
+   doAddNodeContext = (event, shape, id) => {
+      this.doAddNodeOnBoard(event);
+   }
+
+   doDeleteNodeContext = (event, shape, id) => {
+      this.doSetActiveObject(shape, id);
+      this.doDeleteNode();
+   }
+
+   doRenameNodeContext = (event, shape, id) => {
+      this.doSetActiveObject(shape, id);
+      this.doRenameNode();
+   }
+   // -------------------------- Burger Handler --------------------------- //
    doAddNode = () => {
-      const offX = 100 + Math.floor(Math.random() * 250);
-      const offY = 100 + Math.floor(Math.random() * 250);
+      const x = 250 + Math.floor(Math.random() * 350);
+      const y = 250 + Math.floor(Math.random() * 350);
       const creator = this.props.userId;
 
-      this.props.Action.AddNode(Random.id(12), 'New Node', offX, offY, true, creator);
+      this.props.Action.AddNode(Random.id(12), 'New Node'+x, x, y, true, creator);
       this.Burger.closeMenu();
    }
 
    doDeleteNode = () => {
-      const ref = this.props.active.get('ref');
-      const shape = this.props.active.get('shape');
+      const ref = this.mapRefToNode();
 
-      if(ref < 0) //true for Board and Null
-         return;
-      if(shape === ObjectShape.NODE)
+      if(ref !== false)
          this.props.Action.DeleteNode(ref);
+
       this.Burger.closeMenu();
+   }
+
+   doRenameNode = () => {
+      const ref = this.mapRefToNode();
+
+      if(ref !== false)
+         this.Board['noderef_'+ref].setEditMode(true);
+
+      this.Burger.closeMenu();
+   }
+
+   // -------------------------- Board Handler ---------------------------- //
+   doAddNodeOnBoard = (event) => {
+      const x = event.pageX + (-30 + Math.floor(Math.random() * 60));
+      const y = event.pageY + (-30 + Math.floor(Math.random() * 60));
+      const creator = this.props.userId;
+
+      this.props.Action.AddNode(Random.id(12), 'New Node'+x, x, y, true, creator);
    }
 
    doSetActiveObject = (shape, ref) => {
       this.props.Action.SetActiveObject(shape, ref);
+   }
+
+   // -------------------------- Node Handler ----------------------------- //
+   doNodeChangeText = (event, shape, id, text) => {
+      this.props.Action.RenameNode(id, text);
+   }
+
+   doNodeDragStop = (event, shape, id, x, y) => {
+      this.props.Action.MoveNode(id, x, y);
    }
 
    // --------------------------------------------------------------------- //
@@ -157,6 +190,7 @@ class App extends React.Component {
          <BurgerMenu 
          onClickAdd = {this.doAddNode}
          onClickDelete = {this.doDeleteNode}
+         onClickRename = {this.doRenameNode}
          ref={(me) => this.Burger = me}
          />
       );
@@ -165,11 +199,30 @@ class App extends React.Component {
    renderBoard() {
       return (
          <Board 
-            ref={(me) => this.Board = me} 
-            nodes = {this.props.nodes}
-            links = {this.props.links}
-            active = {this.props.active}
-            onNewActiveObject = {this.doSetActiveObject}
+         ref={(me) => this.Board = me} 
+         nodes = {this.props.nodes}
+         links = {this.props.links}
+         active = {this.props.active}
+         onNewActiveObject = {this.doSetActiveObject}
+         onDoubleClick = {this.doAddNodeOnBoard}
+         onRightClick = {this.openContextMenu}
+         onClick = {this.closeContextMenu}
+
+         onNodeChangeText = {this.doNodeChangeText}
+         onNodeDragStop = {this.doNodeDragStop}
+         onNodeRightClick = {this.openContextMenu}
+         onNodeClick = {this.closeContextMenu}
+         />
+      );
+   }
+
+   renderContext() {
+      return (
+         <RightClickMenu 
+         ref={(me) => (this.ContextMenu = me)}
+         onClickAdd = {this.doAddNodeContext}
+         onClickDelete = {this.doDeleteNodeContext}
+         onClickRename = {this.doRenameNodeContext}
          />
       );
    }
@@ -177,8 +230,9 @@ class App extends React.Component {
    render() {
       return (
          <div id="outer-container">
-           {this.renderMenu()}
-           {this.renderBoard()}
+            {this.renderMenu()}
+            {this.renderBoard()}
+            {this.renderContext()}
          </div>
       );
   }

@@ -24,24 +24,21 @@ export default class Node extends React.Component {
       onDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
       onDragStart: (event, shape, id) => console.log("Node DragStart"),
       onDragStop: (event, shape, id, x, y) => console.log("Node DragStop"),
-      onChangeText: (text, shape, id) => console.log("Node ChangeText"),
+      onChangeText: (event, shape, id, text) => console.log("Node ChangeText"),
       onRightClick: (event, shape, id) => console.log("Node RightClick"),
    };
 
    constructor(props) {
       super(props);
-      this.onClick = this.onClick.bind(this, this.props.id);
+      this.onClick = this.onClick.bind(this);
+      this.onAcceptEdit = this.onAcceptEdit.bind(this);
+      this.onDeclineEdit = this.onDeclineEdit.bind(this);
    }
 
    state = {
       dragged: false,
       active: false,
       status: NodeMode.DRAG,
-      creator:this.props.node.get('creator'),
-      root:this.props.node.get('root'),
-      text: this.props.node.get('text'),
-      x: this.props.node.get('x'),
-      y: this.props.node.get('y'),
    };
 
    // --------------------------------------------------------------------- //
@@ -60,7 +57,9 @@ export default class Node extends React.Component {
 
          stop: (event, ui) => {
             this.onDragStop(event, ui.position.left, ui.position.top);
-         }
+         },
+         distance: 5,
+         opacity: 0.5,
       });
 
       $(ReactDOM.findDOMNode(this)).dblclick((event) => this.onDoubleClick(event));
@@ -76,27 +75,28 @@ export default class Node extends React.Component {
 
    setDivStyle() {
       this.divstyle = {
-         left: this.state.x,
-         top: this.state.y,
+         left: this.props.node.get('x'),
+         top: this.props.node.get('y'),
       };
    }
    setActiveState(active) {
-      this.state.active = active;
+      this.setState({active: active});
       this.forceUpdate();
    }
 
-   changeText(newText) {
-      this.state({
-         text: newText,
-      });
+   setEditMode(bool, fn) {
+      if(bool)
+         this.setState({status: NodeMode.EDIT}, () => fn);
+      else
+         this.setState({status: NodeMode.DRAG}, () => fn);
    }
 
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   onClick() {
-      this.props.onClick(null, ObjectShape.NODE, this.props.id);
+   onClick(event) {
+      this.props.onClick(event, ObjectShape.NODE, this.props.id);
    }
 
    onDragStart(event){
@@ -107,34 +107,70 @@ export default class Node extends React.Component {
    }
 
    onDragStop(event, x, y){
-      this.setState({
-         dragged: false,
-         x: x,
-         y: y,
-      });
+      this.setState({dragged: false});
       this.props.onDragStop(event, ObjectShape.NODE, this.props.id, x, y);
    }
 
    onDoubleClick(event) {
       this.props.onDoubleClick(event, ObjectShape.NODE, this.props.id);
+      this.setEditMode(true, () => {this.forceUpdate()});
    }
 
    onRightClick(event) {
       this.props.onRightClick(event, ObjectShape.NODE, this.props.id);
    }
 
+   onAcceptEdit() {
+      this.props.onChangeText(null, ObjectShape.NODE, this.props.id, this.editText.value);
+      this.setEditMode(false, this.forceUpdate());
+   }
+
+   onDeclineEdit() {
+      this.setEditMode(false, this.forceUpdate());
+   }
+
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
 
+   renderEditMode(text){
+      return (
+         <div>
+            <textarea 
+            className="edit" 
+            defaultValue={text}
+            ref={(me) => this.editText = me}
+            onClick={() => this.editText.focus()}
+            />
+            <button 
+            className="btn btn-primary glypicon glyphicon-ok"
+            onClick={this.onAcceptEdit}
+            />
+            <button 
+            className="btn btn-danger glypicon glyphicon-remove"
+            onClick={this.onDeclineEdit}
+            />
+         </div>
+      );
+   }
+
+   renderText(text) {
+      if(this.state.status == NodeMode.DRAG) {
+         return (
+            <div><p className="drag">{text}</p></div>
+         );
+      } else if (this.state.status == NodeMode.EDIT) {
+         return this.renderEditMode(text);
+      }
+   }
+
    render() {
       const dclass = "RNode" 
-         + (this.state.root   ? " root"   : "")
+         + (this.props.node.get('root')   ? " root"   : "")
          + (this.state.active ? " active" : "");
-      const pclass = this.state.status == NodeMode.DRAG ? "drag" : "edit";
       return (
          <div className={dclass} style={this.divstyle} onClick={this.onClick}>
-            <p className={pclass}>{this.state.text}</p>
+            {this.renderText(this.props.node.get('text'))}
          </div>
       );
    }

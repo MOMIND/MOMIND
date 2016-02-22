@@ -1,6 +1,6 @@
 import Board from '/client/components/Board';
 import BurgerMenu from '/client/components/BurgerMenu';
-import {Actions} from '/client/lib/actions';
+import {ActionMethods, ObjectShape} from '/client/lib/actions';
 
 class App extends React.Component {
 
@@ -27,7 +27,7 @@ class App extends React.Component {
       $(document).bind("click", (event) => $("div.custom-menu").hide());
 
 
-      this.StoreTest();
+      //this.StoreTest();
    }
 
    // --------------------------------------------------------------------- //
@@ -49,63 +49,127 @@ class App extends React.Component {
    }
 
    StoreTest() {
-      let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
+      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
 
       console.assert(IMap.isMap(Store.getState().get('nodes')) === true, "Nodes not a Map" );
       console.assert(IMap.isMap(Store.getState().get('links')) === true, "Links not a Map" );
       console.assert(IMap.isMap(Store.getState().get('moment')) === true, "Moment not a Map" );
       console.assert(IMap.isMap(Store.getState().getIn(['moment', 'active'])) === true, "Active not a Map" );
 
-      Store.dispatch(Actions.SetMapId(mapId));
+      Store.dispatch(ActionMethods.SetMapId(mapId));
       console.assert(Store.getState().getIn(['moment', 'mapId'])===mapId, "Set MapId" );
 
-      Store.dispatch(Actions.SetCreatorId(localId));
+      Store.dispatch(ActionMethods.SetCreatorId(localId));
       let creator = Store.getState().getIn(['moment', 'userId']);
       console.assert(creator===localId, "Set Creator" );
       
-      Store.dispatch(Actions.AddNode('a1', 'Test1', 10, 10, true, creator));
-      Store.dispatch(Actions.AddNode('a2', 'Test2', 100, 100, true, creator));
-      Store.dispatch(Actions.AddNode('a3', 'Test3', 500, 500, true, creator));
-      Store.dispatch(Actions.AddNode('a4', 'Test4', 250, 250, false, creator));
+      Store.dispatch(ActionMethods.AddNode('a1', 'Test1', 10, 10, true, creator));
+      Store.dispatch(ActionMethods.AddNode('a2', 'Test2', 100, 100, true, creator));
+      Store.dispatch(ActionMethods.AddNode('a3', 'Test3', 500, 500, true, creator));
+      Store.dispatch(ActionMethods.AddNode('a4', 'Test4', 250, 250, false, creator));
       console.assert(Store.getState().getIn(['nodes']).size===4, "Add Nodes" );
       console.assert(IMap.isMap(Store.getState().getIn(['nodes', 'a4'])) === true, "Node not a Map" );
       
-      Store.dispatch(Actions.MoveNode('a3', 200, 100));
+      Store.dispatch(ActionMethods.MoveNode('a3', 200, 100));
       console.assert(Store.getState().getIn(['nodes', 'a3']).get('x')===200, "Set X" );
       console.assert(Store.getState().getIn(['nodes', 'a3']).get('y')===100, "Set Y" );
       
-      Store.dispatch(Actions.DeleteNode('a2'));
+      Store.dispatch(ActionMethods.DeleteNode('a2'));
       console.assert(Store.getState().getIn(['nodes', 'a2']) === undefined, "Delete Node" );
       
-      Store.dispatch(Actions.RenameNode('a1', 'Renamed'));
+      Store.dispatch(ActionMethods.RenameNode('a1', 'Renamed'));
       console.assert(Store.getState().getIn(['nodes', 'a1']).get('text')==='Renamed', "Rename Node" );
 
-      unsubscribe();
+      Store.dispatch(ActionMethods.ResetState());
+      console.log("Test Finished");
+      //unsubscribe();
+   }
+
+   StoreComponentTest() {
+      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
+
+      console.assert(IMap.isMap(this.props.nodes), "Nodes not a Map" );
+      console.assert(IMap.isMap(this.props.links), "Links not a Map" );
+      console.assert(IMap.isMap(this.props.active), "Active not a Map" );
+
+      this.props.Action.SetMapId(mapId);
+      console.assert(this.props.mapId===mapId, "Set MapId" );
+
+      this.props.Action.SetCreatorId(localId);
+      let creator = this.props.userId;
+      console.assert(creator===localId, "Set Creator" );
+      
+      this.props.Action.AddNode('a1', 'Test1', 10, 10, true, creator);
+      this.props.Action.AddNode('a2', 'Test2', 100, 100, true, creator);
+      this.props.Action.AddNode('a3', 'Test3', 500, 500, true, creator);
+      this.props.Action.AddNode('a4', 'Test4', 250, 250, false, creator);
+      console.assert(this.props.nodes.size===4, "Add Nodes" );
+      console.assert(IMap.isMap(this.props.nodes.get('a4')), "Node not a Map" );
+      
+      this.props.Action.MoveNode('a3', 200, 100);
+      console.assert(this.props.nodes.getIn(['a3','x'])===200, "Set X" );
+      console.assert(this.props.nodes.getIn(['a3','y'])===100, "Set Y" );
+      
+      this.props.Action.DeleteNode('a2');
+      console.assert(this.props.nodes.get('a2') === undefined, "Delete Node" );
+      
+      this.props.Action.RenameNode('a1', 'Renamed');
+      console.assert(this.props.nodes.getIn(['a1','text'])==='Renamed', "Rename Node" );
+
+      this.props.Action.ResetState();
+      console.log("Test Finished");
+      //unsubscribe();
    }
 
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
+   doAddNode = () => {
+      const offX = 100 + Math.floor(Math.random() * 250);
+      const offY = 100 + Math.floor(Math.random() * 250);
+      const creator = this.props.userId;
 
+      this.props.Action.AddNode(Random.id(12), 'New Node', offX, offY, true, creator);
+      this.Burger.closeMenu();
+   }
+
+   doDeleteNode = () => {
+      const ref = this.props.active.get('ref');
+      const shape = this.props.active.get('shape');
+
+      if(ref < 0) //true for Board and Null
+         return;
+      if(shape === ObjectShape.NODE)
+         this.props.Action.DeleteNode(ref);
+      this.Burger.closeMenu();
+   }
+
+   doSetActiveObject = (shape, ref) => {
+      this.props.Action.SetActiveObject(shape, ref);
+   }
 
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
 
-   renderBoard() {
+   renderMenu() {
       return (
          <BurgerMenu 
+         onClickAdd = {this.doAddNode}
+         onClickDelete = {this.doDeleteNode}
+         ref={(me) => this.Burger = me}
          />
       );
    }
 
-   renderMenu() {
+   renderBoard() {
       return (
          <Board 
             ref={(me) => this.Board = me} 
             nodes = {this.props.nodes}
             links = {this.props.links}
             active = {this.props.active}
+            onNewActiveObject = {this.doSetActiveObject}
          />
       );
    }
@@ -119,6 +183,8 @@ class App extends React.Component {
       );
   }
 }
+
+RMixIn(App.prototype, ReactMeteorData);
 
 // --------------------------------------------------------------------- //
 // ------------------------- Redux Management -------------------------- //
@@ -136,7 +202,7 @@ class App extends React.Component {
 
    const MapDispatchToProps = (dispatch) => {
       return {
-         Actions: Redux.bindActionCreators(Actions, dispatch)
+         Action: Redux.bindActionCreators(ActionMethods, dispatch)
       }
    };
 

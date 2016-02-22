@@ -1,4 +1,4 @@
-& {   
+.RNode {   
    @include prefix((
       border-radius: 15px,
       user-select: none
@@ -22,7 +22,7 @@
 
    &.active
    {
-      padding: 6px; 
+      padding: 7px !important; 
       border: 2px solid $dark-green;
    }
 

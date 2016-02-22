@@ -17,15 +17,13 @@ class App extends React.Component {
 
    };
 
-   static defaultProps = {
-      store: Store,
-   };
-
    // --------------------------------------------------------------------- //
    // ------------------------- React Lifecycle --------------------------- //
    // --------------------------------------------------------------------- //
 
    componentDidMount() {
+      this.props.Action.SetMapId(mapId);
+      this.props.Action.SetCreatorId(localId);
    }
 
    // --------------------------------------------------------------------- //
@@ -36,42 +34,6 @@ class App extends React.Component {
       return {
          null
       };
-   }
-
-   StoreAssertTest() {
-      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
-
-      console.assert(IMap.isMap(this.props.nodes), "Nodes not a Map" );
-      console.assert(IMap.isMap(this.props.links), "Links not a Map" );
-      console.assert(IMap.isMap(this.props.active), "Active not a Map" );
-
-      this.props.Action.SetMapId(mapId);
-      console.assert(this.props.mapId===mapId, "Set MapId" );
-
-      this.props.Action.SetCreatorId(localId);
-      let creator = this.props.userId;
-      console.assert(creator===localId, "Set Creator" );
-      
-      this.props.Action.AddNode('a1', 'Test1', 10, 10, true, creator);
-      this.props.Action.AddNode('a2', 'Test2', 100, 100, true, creator);
-      this.props.Action.AddNode('a3', 'Test3', 500, 500, true, creator);
-      this.props.Action.AddNode('a4', 'Test4', 250, 250, false, creator);
-      console.assert(this.props.nodes.size===4, "Add Nodes" );
-      console.assert(IMap.isMap(this.props.nodes.get('a4')), "Node not a Map" );
-      
-      this.props.Action.MoveNode('a3', 200, 100);
-      console.assert(this.props.nodes.getIn(['a3','x'])===200, "Set X" );
-      console.assert(this.props.nodes.getIn(['a3','y'])===100, "Set Y" );
-      
-      this.props.Action.DeleteNode('a2');
-      console.assert(this.props.nodes.get('a2') === undefined, "Delete Node" );
-      
-      this.props.Action.RenameNode('a1', 'Renamed');
-      console.assert(this.props.nodes.getIn(['a1','text'])==='Renamed', "Rename Node" );
-
-      this.props.Action.ResetState();
-      console.log("Test Finished");
-      //unsubscribe();
    }
 
    mapRefToNode() {
@@ -129,14 +91,18 @@ class App extends React.Component {
    doRenameNodeContext = (event, shape, id) => {
       this.doRenameNode();
    }
+
+   doAddSubNodeContext = (event, shape, id) => {
+      this.doAddSubNode();
+   }
    // -------------------------- Burger Handler --------------------------- //
    doAddNode = () => {
       const x = window.pageXOffset + 250 + Math.floor(Math.random() * 350);
-      const y = window.pageYOffset +250 + Math.floor(Math.random() * 350);
+      const y = window.pageYOffset + 250 + Math.floor(Math.random() * 350);
       const creator = this.props.userId;
+      const mapId = this.props.mapId;
 
-      this.props.Action.AddNode(Random.id(12), 'New Node'+x, x, y, true, creator);
-      this.Burger.closeMenu();
+      this.props.Action.AddNode(Random.id(12), 'New Node', x, y, true, creator, mapId);
    }
 
    doDeleteNode = () => {
@@ -144,8 +110,6 @@ class App extends React.Component {
 
       if(ref !== false)
          this.props.Action.DeleteNode(ref);
-
-      this.Burger.closeMenu();
    }
 
    doRenameNode = () => {
@@ -153,8 +117,17 @@ class App extends React.Component {
 
       if(ref !== false)
          this.Board['noderef_'+ref].setEditMode(true);
+   }
 
-      this.Burger.closeMenu();
+   doAddSubNode = () => {
+      const ref = this.mapRefToNode();
+      if(ref !== false){
+         const parent = this.props.nodes.get(ref);
+         const x = parent.get('x') - 150 + Math.floor(Math.random() * 300);
+         const y = parent.get('y') - 150 + Math.floor(Math.random() * 300);
+         const creator = this.props.userId;
+         this.props.Action.AddSubNode(Random.id(12), 'New Node', x, y, true, creator, ref);
+      }
    }
 
    // -------------------------- Board Handler ---------------------------- //
@@ -162,8 +135,9 @@ class App extends React.Component {
       const x = event.pageX + (-30 + Math.floor(Math.random() * 60));
       const y = event.pageY + (-30 + Math.floor(Math.random() * 60));
       const creator = this.props.userId;
+      const mapId = this.props.mapId;
 
-      this.props.Action.AddNode(Random.id(12), 'New Node'+x, x, y, true, creator);
+      this.props.Action.AddNode(Random.id(12), 'New Node', x, y, true, creator, mapId);
    }
 
    doSetActiveObject = (shape, ref) => {
@@ -189,6 +163,7 @@ class App extends React.Component {
          onClickAdd = {this.doAddNode}
          onClickDelete = {this.doDeleteNode}
          onClickRename = {this.doRenameNode}
+         onClickAddSub = {this.doAddSubNode}
          ref={(me) => this.Burger = me}
          />
       );
@@ -201,6 +176,7 @@ class App extends React.Component {
          nodes = {this.props.nodes}
          links = {this.props.links}
          active = {this.props.active}
+         mapId={this.props.mapId+""}
          onNewActiveObject = {this.doSetActiveObject}
          onDoubleClick = {this.doAddNodeOnBoard}
          onRightClick = {this.openContextMenu}
@@ -221,6 +197,7 @@ class App extends React.Component {
          onClickAdd = {this.doAddNodeContext}
          onClickDelete = {this.doDeleteNodeContext}
          onClickRename = {this.doRenameNodeContext}
+         onClickAddSub = {this.doAddSubNodeContext}
          />
       );
    }

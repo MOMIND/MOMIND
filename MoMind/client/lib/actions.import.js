@@ -14,10 +14,10 @@ function ActionCreator(type, ...argNames) {
 // ------------------------------------------------------------ //
 
 const ADD_NODE = 'ADD_NODE'; //ACTION: Add a free Node to the Mindmap, root is special styling 
-const AddNode = ActionCreator(ADD_NODE, 'id', 'text', 'x', 'y', 'root', 'creator');
+const AddNode = ActionCreator(ADD_NODE, 'id', 'text', 'x', 'y', 'root', 'creator', 'parent', 'child');
 
 const ADD_SUBNODE = 'ADD_SUBNODE'; //ACTION: Add a Node to the Mindmap as a Child of another Node
-const AddSubNode = ActionCreator(ADD_SUBNODE, 'id', 'text', 'x', 'y', 'parent', 'creator');
+const AddSubNode = ActionCreator(ADD_SUBNODE, 'id', 'text', 'x', 'y', 'root', 'creator', 'parent', 'child');
 
 const RENAME_NODE = 'RENAME_NODE'; //ACTION: Change the displayed name of the Node
 const RenameNode = ActionCreator(RENAME_NODE, 'id', 'text');

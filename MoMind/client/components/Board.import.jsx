@@ -21,7 +21,8 @@ export default class Board extends React.Component {
       onNodeDragStop: React.PropTypes.func,
       nodes: CustomTypes.IMap,
       links: CustomTypes.IMap,
-      active: CustomTypes.IMap
+      active: CustomTypes.IMap,
+      mapId: CustomTypes.literal,
    };
 
    static defaultProps = {
@@ -189,6 +190,7 @@ export default class Board extends React.Component {
          key={value[0]}
          node={value[1]}
          id={value[0]}
+         mapId={this.props.mapId}
          onClick={this.onNodeClick}
          onRightClick={this.onNodeRightClick}
          onDoubleClick={this.onNodeDoubleClick}

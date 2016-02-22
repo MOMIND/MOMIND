@@ -10,7 +10,7 @@ export default class Node extends React.Component {
    static propTypes = {
       id: CustomTypes.literal,
       node: CustomTypes.IMap,
-
+      mapId: CustomTypes.literal,
       onClick:React.PropTypes.func,
       onDoubleClick: React.PropTypes.func,
       onDragStart: React.PropTypes.func,
@@ -166,7 +166,7 @@ export default class Node extends React.Component {
 
    render() {
       const dclass = "RNode" 
-         + (this.props.node.get('root')   ? " root"   : "")
+         + (!this.props.node.getIn(['parent', this.props.mapId])   ? ""   : " root")
          + (this.state.active ? " active" : "");
       return (
          <div className={dclass} style={this.divstyle} onClick={this.onClick}>

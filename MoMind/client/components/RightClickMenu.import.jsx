@@ -9,11 +9,13 @@ export default class RightClickMenu extends React.Component {
       onClickAdd: React.PropTypes.func,
       onClickRename: React.PropTypes.func,
       onClickDelete: React.PropTypes.func,
+      clickAddSub: React.PropTypes.func,
    };
    static defaultProps = {
       onClickAdd: (event, shape, id) => console.log("Context AddNode", shape, id),
       onClickRename: (event, shape, id) => console.log("Context RenameNode", shape, id),
       onClickDelete: (event, shape, id) => console.log("Context DeleteNode", shape, id),
+      clickAddSub: (event, shape, id) => console.log("Context AddSubNode", shape, id),
    };
    
    constructor(props) {
@@ -56,6 +58,10 @@ export default class RightClickMenu extends React.Component {
       this.hideMenu();
       this.props.onClickAdd(event, this.state.shape, this.state.id);
    }
+   clickAddSub = (event) => {
+      this.hideMenu();
+      this.props.onClickAddSub(event, this.state.shape, this.state.id);
+   }
    clickRename = (event) => {
       this.hideMenu();
       this.props.onClickRename(event, this.state.shape, this.state.id);
@@ -67,16 +73,17 @@ export default class RightClickMenu extends React.Component {
 
    renderNodeMenu() {
       return (
-         <div>
+         <div className="context-items">
             <a className="context-menu-item" id="deleteNode" onClick={this.clickDelete}>Delete this Node</a>
             <a className="context-menu-item" id="renameNode" onClick={this.clickRename}>Rename this Node</a>
+            <a className="context-menu-item" id="renameNode" onClick={this.clickAddSub}>Create Subnode</a>
          </div>
       );
    }
 
    renderBoardMenu() {
       return (
-         <div>
+         <div className="context-items">
             <a className="context-menu-item" id="newNode" onClick={this.clickAdd}>Create new Node</a>
          </div>
       );

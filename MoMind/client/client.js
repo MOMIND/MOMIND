@@ -10,6 +10,7 @@ Meteor.startup(function(){
       return;
 
     mapId = result;
+    localId = Random.id(8);
     LoadReact();
 
     Meteor.subscribe('MoNodes', mapId, {
@@ -20,8 +21,6 @@ Meteor.startup(function(){
 
     Meteor.subscribe('MoHist', mapId);
   });
-
-  localId = Random.id(8);
 });
 
 function LoadReact() {

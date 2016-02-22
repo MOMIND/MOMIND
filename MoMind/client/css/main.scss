@@ -26,15 +26,10 @@ $black: #272727;
 // -------------------------- //
 // ---- Component Styling --- //
 // -------------------------- //
-.RNode {
-   @import 'Node';
-}
 
-.RBoard {
-   @import 'Board';
-}
-
-//External Component
+@import 'Node';
+@import 'Board';
+@import 'RightClickMenu';
 @import 'BurgerMenu';
 
 // -------------------------- //
@@ -51,21 +46,4 @@ body {
    background-color: $light-grey;
    width:2500px;
    height: 1500px;
-}
-
-.custom-menu {
-    z-index:1000;
-    position: absolute;
-    color: $black;
-    background-color:$light-green;
-    border: 1px solid $dark-green;
-    padding: 2px;
-}
-
-.show-menu {
-   display: inline-block;
-}
-
-.hide-menu {
-   display: none;
 }

@@ -27,11 +27,26 @@ function MoNodesReducer(state = IMap({}), action) {
             x: action.x,
             y: action.y,
             root: action.root,
-            creator: action.creator
+            creator: action.creator,
+            parent: ISet([action.parent]),
+            child: ISet([])
          });
          return state.set(action.id, obj);
       case ActionConstants.ADD_SUBNODE:
-         return state; //NYI
+         obj = IMap({
+               text: action.text,
+               x: action.x,
+               y: action.y,
+               root: action.root,
+               creator: action.creator,
+               parent: ISet([action.parent]),
+               child: ISet([])
+            });
+         state = state.set(action.id, obj);
+
+         obj = state.getIn([action.parent, 'child']).add(action.id);
+         state = state.setIn([action.parent, 'child'], obj);
+         return state;
       case ActionConstants.RENAME_NODE:
          return state.setIn([action.id, 'text'], action.text);
       case ActionConstants.MOVE_NODE:

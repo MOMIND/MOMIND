@@ -159,6 +159,8 @@ export default class Board extends React.Component {
    onNodeRightClick(event, shape, id){
       this.setBubbleRightClick(true);
       this.props.onNodeRightClick(event, shape, id);
+
+      this.setActiveObject(shape, id);
    }
 
    //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event

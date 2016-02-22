@@ -49,8 +49,7 @@ class App extends React.Component {
    }
 
    StoreTest() {
-      //let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
-      let unsubscribe = Store.subscribe();
+      let unsubscribe = Store.subscribe(() => console.log(Store.getState().toJSON()) );
 
       console.assert(IMap.isMap(Store.getState().get('nodes')) === true, "Nodes not a Map" );
       console.assert(IMap.isMap(Store.getState().get('links')) === true, "Links not a Map" );

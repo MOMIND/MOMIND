@@ -27,7 +27,6 @@ require('jquery.panzoom');
 /* ------ Redux Tools ----- */
 /* ------------------------ */
 Redux = require("redux");
-ReduxProvider = require("react-redux").Provider;
 ConnectProvider = require("react-redux").connect;
 
 IMap = require("immutable").Map;

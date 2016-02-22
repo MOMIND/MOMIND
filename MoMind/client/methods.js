@@ -16,8 +16,9 @@ Meteor.methods({
          initialSave = true;
       }
 
+      LoadReact();
       Init(mapId, nodeText);
-
+      /*
       nodePointer = MoNodes.find({});
       //Observer makes no Change if the Change comes from the local client or, for some reasons, a different mapId
       nodePointer.observeChanges({
@@ -53,6 +54,69 @@ Meteor.methods({
 
             DeleteNode(field.nodeid);
          }
-      });
+      });*/
    }
 });
+
+
+function LoadReact() {
+   System.import('/client/components/App').then(function(module) {
+    const AppModule = module.default;
+
+     let App = React.createElement(AppModule, {store: Store});
+     AppElement = ReactDOM.render(App, document.getElementById('app'), () => {
+      
+      console.log('Client React Ready');
+      //jsPlumb.bind("ready", () => AppElement._reactInternalInstance._renderedComponent._instance.jsPlumbDraw());
+     });
+     jQuery('img.svg').each(() => {
+       var $img = jQuery(this);
+       var imgID = $img.attr('id');
+       var imgClass = $img.attr('class');
+       var imgURL = $img.attr('src');
+
+       jQuery.get(imgURL, function(data) {
+           // Get the SVG tag, ignore the rest
+           var $svg = jQuery(data).find('svg');
+
+           // Add replaced image's ID to the new SVG
+           if(typeof imgID !== 'undefined') {
+               $svg = $svg.attr('id', imgID);
+           }
+           // Add replaced image's classes to the new SVG
+           if(typeof imgClass !== 'undefined') {
+               $svg = $svg.attr('class', imgClass+' replaced-svg');
+           }
+
+           // Remove any invalid XML tags as per http://validator.w3.org
+           $svg = $svg.removeAttr('xmlns:a');
+
+           // Replace image with new SVG
+           $img.replaceWith($svg);
+
+       }, 'xml');
+     });
+   });
+}
+
+
+/*//For parallel loading
+function StartLoad() {
+  System.import('/client/components/App').then(function(module) {
+    const AppModule = module.default;
+
+    function run() {
+      let App = React.createElement(AppModule);
+      ReactDOM.render(App, document.getElementById('app'));
+      console.log('Client React Ready');
+    }
+
+    const loadedStates = ['complete', 'loaded', 'interactive'];
+
+    if (loadedStates.includes(document.readyState) && document.body) {
+      run();
+    } else {
+      window.addEventListener('DOMContentLoaded', run, false);
+    }
+  });
+}*/

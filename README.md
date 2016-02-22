@@ -48,10 +48,12 @@ How Actions affect the State is defined in the reducers in `client/lib/reducer.i
 meteor how, what, flow
 db how what, structure
 
-####Browser Extensions  
+####Developer Tools
 - [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension#implementation) for Google Chrome/Chromium  
 - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) for Google Chrome/Chromium  
 - [React Detector](https://chrome.google.com/webstore/detail/react-detector/jaaklebbenondhkanegppccanebkdjlh) for Google Chrome/Chromium  
+- [Sublime ES6 and React](https://github.com/babel/babel-sublime) with Package Control
+- [Sublime SASS](https://packagecontrol.io/packages/Sass) with Package Control
 
 #### Coding Hints
 - Use ES6/7 for js and jsx files. 

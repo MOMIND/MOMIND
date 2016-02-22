@@ -46,10 +46,6 @@ export default class Board extends React.Component {
    }
 
    state = {
-      active: IMap({
-            id: null,
-            shape: null,
-         }),
       _bubbleDoubleClick: false,
       _bubbleRightClick: false,
       _bubbleClick: false,
@@ -59,16 +55,16 @@ export default class Board extends React.Component {
    // -------------------------- Class Methods ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   getRef(id, shape) {
-      let ref = null;
+   getRef(shape, ref) {
+      let r = null;
 
       if(shape === ObjectShape.NODE) {
-         ref = `noderef_${id}`;
+         r = `noderef_${ref}`;
       } else if(shape === ObjectShape.LINK) {
-         ref = `linkref_${id}`;
+         r = `linkref_${ref}`;
       }
 
-      return this.refs[ref];
+      return r === null ? null: this[r];
    }
 
    setBubbleRightClick(bool) {//setState is too slow 
@@ -83,10 +79,10 @@ export default class Board extends React.Component {
       this.state._bubbleClick = bool;
    }
 
-   setActiveObject(shape, id) 
+   setActiveObject(shape, ref) 
    {
-      let oldRef = this.getRef(this.state.active.get('id'), this.state.active.get('shape'));
-      let newRef = this.getRef(id, shape);
+      let oldRef = this.getRef(this.props.active.get('shape'), this.props.active.get('ref'));
+      let newRef = this.getRef(shape, ref);
 
       if(oldRef === newRef) //IF nothing changed, exit early
          return;
@@ -99,14 +95,7 @@ export default class Board extends React.Component {
       if(oldRef !== null && oldRef !== undefined) //IF old Ref is valid, disable activeState.
          oldRef.setActiveState(false);
 
-      this.props.onNewActiveObject(shape, id);
-
-      this.setState({
-         active: 
-            this.state.active
-                        .set('id', id)
-                        .set('shape', shape)
-      });
+      this.props.onNewActiveObject(shape, ref);
    }
 
    setDefaultActiveNode() {
@@ -173,39 +162,10 @@ export default class Board extends React.Component {
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
 
-   renderNodePlain(node, i) {
-      const dbId = node._id || 'x';
-      const id = node.nodeid || 'x';
-      const text = node.nodetext || 'New Node';
-      const parent = node.parentid || 'top';
-      const creator = node.localid || 'anon';
-      const x = parent==='top'?0:node.x;
-      const y = parent==='top'?0:node.y;
-
-      let Element = (
-         <Node 
-         key={dbId}
-         ref= {'noderef_'+id}
-         index={i}
-         id={id}
-         initialText={text}
-         parent={parent}
-         creator={creator}
-         initialX={x}
-         initialY={y}
-         onClick={this.onNodeClick}
-         onRightClick={this.onNodeRightClick}
-         onDoubleClick={this.onNodeDoubleClick}
-         />
-      );
-
-      return Element;
-   }
-
    renderNode(value, i) {
       let element = (
          <Node
-         ref= {'noderef_'+value[0]}
+         ref= {(me) => this['noderef_'+value[0]] = me}
          index={i}
          key={i}
          node={value[1]}

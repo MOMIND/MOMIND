@@ -54,7 +54,7 @@ const SET_CREATORID = 'SET_CREATORID'; //ACTION: Set Id for the Curent Semi-User
 const SetCreatorId = ActionCreator(SET_CREATORID, 'id');
 
 const SET_ACTIVE_OBJECT = 'SET_ACTIVE_OBJECT'; //ACTION: Set Reference and Type of Active Object
-const SetActiveObject = ActionCreator(SET_ACTIVE_OBJECT, 'ref', 'shape');
+const SetActiveObject = ActionCreator(SET_ACTIVE_OBJECT, 'shape', 'ref');
 
 const RESET_STATE = 'RESET_STATE'; //ACTION: Set Reference and Type of Active Object
 const ResetState = ActionCreator(RESET_STATE,);
@@ -81,7 +81,7 @@ export const NodeMode = {
    'EDIT': 'EDIT'
 }
 
-export const Actions = {
+export const ActionMethods = {
    AddNode,
    AddSubNode,
    RenameNode,

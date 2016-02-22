@@ -1,0 +1,39 @@
+.show-menu {
+   display: inline-block;
+}
+
+.hide-menu {
+   display: none;
+}
+
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    color: $black;
+    background-color:$light-green;
+    border-top: 1px solid $dark-green;
+    border-right: 3px solid $dark-green;
+    border-left: 1px solid $dark-green;
+    border-bottom: 3px solid $dark-green;
+    padding: 5px;
+    width: 150px;
+
+    p {
+      text-align: center;
+      display: none;
+    }
+}
+
+.context-menu-item
+{
+   display: block;
+   color: $dark-grey;
+   cursor: pointer;
+   margin: 2px;
+   text-align: center;
+   &:hover {
+      font-weight: 600;
+      text-decoration: none;
+      color: $dark-green;
+   }
+}

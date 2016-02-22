@@ -10,6 +10,7 @@ Meteor.startup(function(){
       return;
 
     mapId = result;
+    localId = Random.id(8);
     LoadReact();
 
     Meteor.subscribe('MoNodes', mapId, {
@@ -20,8 +21,6 @@ Meteor.startup(function(){
 
     Meteor.subscribe('MoHist', mapId);
   });
-
-  localId = Random.id(8);
 });
 
 function LoadReact() {
@@ -29,8 +28,14 @@ function LoadReact() {
     const AppModule = module.default;
 
     let App = React.createElement(AppModule, {store: Store});
-    let Element = ReactDOM.render(App, document.getElementById('app'));
-    console.log('Client React Ready');
+    AppElement = ReactDOM.render(App, document.getElementById('app'), () => {
+      
+      console.log('Client React Ready');
+      //jsPlumb.bind("ready", () => AppElement._reactInternalInstance._renderedComponent._instance.jsPlumbDraw());
+    });
+    
+
+    
 
      jQuery('img.svg').each(function(){
           var $img = jQuery(this);
@@ -62,6 +67,9 @@ function LoadReact() {
       });
   });
 }
+
+
+
 
 //For parallel loading
 function StartLoad() {

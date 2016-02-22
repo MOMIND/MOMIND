@@ -21,7 +21,8 @@ export default class Board extends React.Component {
       onNodeDragStop: React.PropTypes.func,
       nodes: CustomTypes.IMap,
       links: CustomTypes.IMap,
-      active: CustomTypes.IMap
+      active: CustomTypes.IMap,
+      mapId: CustomTypes.literal,
    };
 
    static defaultProps = {
@@ -49,6 +50,8 @@ export default class Board extends React.Component {
       this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
       this.onNodeChangeText = this.onNodeChangeText.bind(this);
       this.onNodeDragStop = this.onNodeDragStop.bind(this);
+      this.onNodeDrawLineRequest = this.onNodeDrawLineRequest.bind(this);
+      this.onNodeDrag = this.onNodeDrag.bind(this);
    }
 
    state = {
@@ -120,6 +123,8 @@ export default class Board extends React.Component {
       $(ReactDOM.findDOMNode(this)).bind("contextmenu", (event) => this.onRightClick(event));
    }
 
+
+
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
@@ -177,6 +182,30 @@ export default class Board extends React.Component {
       this.props.onNodeDragStop(event, shape, id, x, y);
    }
 
+   onNodeDrawLineRequest(childel, parentid)
+   {
+      let ref = this.getRef(ObjectShape.NODE, parentid)
+      if(ref === null)
+         return;
+      let endpointOptions = { isSource:true, isTarget:true }; 
+      let c = jsPlumb.addEndpoint(ReactDOM.findDOMNode(childel), { anchor:"Center" }, endpointOptions );  
+      let p = jsPlumb.addEndpoint(ReactDOM.findDOMNode(ref), { anchor:"Center" }, endpointOptions );  
+      childel.setEndpoint(c);
+      console.log(c);
+      jsPlumb.connect({ 
+          source:c,
+          target:p,
+          connector: "Bezier",
+          paintStyle:{ lineWidth:2, strokeStyle:'green'}
+      });
+
+
+   }
+
+   onNodeDrag() {
+      jsPlumb.repaintEverything();
+   }
+
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
@@ -189,14 +218,16 @@ export default class Board extends React.Component {
          key={value[0]}
          node={value[1]}
          id={value[0]}
+         mapId={this.props.mapId}
          onClick={this.onNodeClick}
          onRightClick={this.onNodeRightClick}
          onDoubleClick={this.onNodeDoubleClick}
          onChangeText={this.onNodeChangeText}
          onDragStop={this.onNodeDragStop}
+         onRequestParent={this.onNodeDrawLineRequest}
+         onDrag={this.onNodeDrag}
          />
       );
-
       return element;
    }
 

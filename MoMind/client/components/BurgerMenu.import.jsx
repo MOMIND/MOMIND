@@ -65,27 +65,35 @@ export default class BurgerMenu extends React.Component {
 
    clickLogo = () => {
       this.props.onClickLogo();
+      this.closeMenu();
    }
    clickAdd = () => {
       this.props.onClickAdd();
+      this.closeMenu();
    }
    clickAddSub = () => {
       this.props.onClickAddSub();
+      this.closeMenu();
    }
    clickRename = () => {
       this.props.onClickRename();
+      this.closeMenu();
    }
    clickDelete = () => {
       this.props.onClickDelete();
+      this.closeMenu();
    }
    clickDownload = () => {
       this.props.onClickDownload();
+      this.closeMenu();
    }
    clickLink = () => {
       this.props.onClickLink();
+      this.closeMenu();
    }
    clickSettings = () => {
       this.props.onClickSettings();
+      this.closeMenu();
    }
    isMenuOpen = (state) => {
       if(state.isOpen) {

@@ -1,4 +1,4 @@
-& {   
+.RNode {   
    @include prefix((
       border-radius: 15px,
       user-select: none
@@ -11,6 +11,7 @@
    padding: 7px; 
    display: inline-block;
    position: absolute;
+   z-index:20;
 
    &.root
    {
@@ -18,11 +19,12 @@
       color: $white;
       padding: 8px;
       border: 0px solid $dark-green;
+      z-index:30;
    }
 
    &.active
    {
-      padding: 6px; 
+      padding: 7px !important; 
       border: 2px solid $dark-green;
    }
 

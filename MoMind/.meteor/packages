@@ -26,3 +26,4 @@ universe:modules
 
 npm-container
 fourseven:scss
+jsplumb:jsplumb

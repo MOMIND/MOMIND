@@ -113,7 +113,9 @@ export default class Node extends React.Component {
 
    deleteEndpoint()
    {
+      console.log(this.state.endpoint);
       jsPlumb.deleteEndpoint(this.state.endpoint);
+      jsPlumb.repaintEverything();
    }
 
    // --------------------------------------------------------------------- //

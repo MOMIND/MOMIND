@@ -131,8 +131,8 @@ class App extends React.Component {
    }
    // -------------------------- Burger Handler --------------------------- //
    doAddNode = () => {
-      const x = 250 + Math.floor(Math.random() * 350);
-      const y = 250 + Math.floor(Math.random() * 350);
+      const x = window.pageXOffset + 250 + Math.floor(Math.random() * 350);
+      const y = window.pageYOffset +250 + Math.floor(Math.random() * 350);
       const creator = this.props.userId;
 
       this.props.Action.AddNode(Random.id(12), 'New Node'+x, x, y, true, creator);

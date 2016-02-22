@@ -123,12 +123,10 @@ class App extends React.Component {
    }
 
    doDeleteNodeContext = (event, shape, id) => {
-      this.doSetActiveObject(shape, id);
       this.doDeleteNode();
    }
 
    doRenameNodeContext = (event, shape, id) => {
-      this.doSetActiveObject(shape, id);
       this.doRenameNode();
    }
    // -------------------------- Burger Handler --------------------------- //

@@ -1,7 +1,8 @@
 & {   
    @include prefix((
       border-radius: 15px,
-   ),webkit moz);
+      user-select: none
+   ),webkit moz ms khtml);
 
    background-color: $light-green;
    color: $dark-grey;
@@ -9,8 +10,7 @@
 
    padding: 7px; 
    display: inline-block;
-   position: relative;
-
+   position: absolute;
 
    &.root
    {
@@ -26,15 +26,16 @@
       border: 2px solid $dark-green;
    }
 
-   p {
+   div {
       font-weight: 400;
-      margin: 0px;  
-
-      &.drag {
+       
+      .drag {
+         margin: 0px; 
          cursor: move;
       }
 
-      &.edit {
+      .edit {
+         background-color: $green;
          cursor: text;
       }
    }

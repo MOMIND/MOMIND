@@ -17,6 +17,7 @@ export default class Board extends React.Component {
       onNodeDoubleClick: React.PropTypes.func,
       onNodeRightClick: React.PropTypes.func,
       onNewActiveObject: React.PropTypes.func,
+      onNodeChangeText: React.PropTypes.func,
       nodes: CustomTypes.IMap,
       links: CustomTypes.IMap,
       active: CustomTypes.IMap
@@ -31,6 +32,7 @@ export default class Board extends React.Component {
       onNodeDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
       onNodeRightClick: (event, shade, id) => console.log("Node RightClick"),
       onNewActiveObject: (shape, id) => console.log("New Active Object"),
+      onNodeChangeText : (event,shape, id, text) => console.log("Default Node Text"),
       nodes: IMap({}),
       links: IMap({}),
       active: IMap({}),
@@ -43,6 +45,7 @@ export default class Board extends React.Component {
       this.onNodeClick = this.onNodeClick.bind(this);
       this.onNodeRightClick = this.onNodeRightClick.bind(this);
       this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
+      this.onNodeChangeText = this.onNodeChangeText.bind(this);
    }
 
    state = {
@@ -67,16 +70,16 @@ export default class Board extends React.Component {
       return r === null ? null: this[r];
    }
 
-   setBubbleRightClick(bool) {//setState is too slow 
-      this.state._bubbleRightClick = bool;
+   setBubbleRightClick(bool) {//state and setState is asynchronous and thus too slow 
+      this._bubbleRightClick = bool;
    }
 
-   setBubbleDoubleClick(bool) {//setState is too slow
-      this.state._bubbleDoubleClick = bool;
+   setBubbleDoubleClick(bool) {//state and setState is asynchronous and thus too slow 
+      this._bubbleDoubleClick = bool;
    }
 
-   setBubbleClick(bool) {//setState is too slow
-      this.state._bubbleClick = bool;
+   setBubbleClick(bool) {//state and setState is asynchronous and thus too slow 
+      this._bubbleClick = bool;
    }
 
    setActiveObject(shape, ref) 
@@ -118,8 +121,8 @@ export default class Board extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   onClick() {
-      if(this.state._bubbleClick)
+   onClick(event) {
+      if(this._bubbleClick)
          return this.setBubbleClick(false);
       this.props.onClick(null, ObjectShape.BOARD);
 
@@ -127,13 +130,13 @@ export default class Board extends React.Component {
    }
 
    onDoubleClick(event) {
-      if(this.state._bubbleDoubleClick)
+      if(this._bubbleDoubleClick)
          return this.setBubbleDoubleClick(false);
       this.props.onDoubleClick(event, ObjectShape.BOARD);
    }
 
    onRightClick(event) {
-      if(this.state._bubbleRightClick)
+      if(this._bubbleRightClick)
          return this.setBubbleRightClick(false);
       this.props.onRightClick(event, ObjectShape.BOARD);
    }
@@ -158,6 +161,10 @@ export default class Board extends React.Component {
       this.props.onNodeDoubleClick(event, shape, id);
    }
 
+   onNodeChangeText(event, shape, id, text){
+      this.props.onNodeChangeText(event, shape, id, text);
+   }
+
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
@@ -166,13 +173,14 @@ export default class Board extends React.Component {
       let element = (
          <Node
          ref= {(me) => this['noderef_'+value[0]] = me}
-         index={i}
-         key={i}
+         index={value[0]}
+         key={value[0]}
          node={value[1]}
          id={value[0]}
          onClick={this.onNodeClick}
          onRightClick={this.onNodeRightClick}
          onDoubleClick={this.onNodeDoubleClick}
+         onChangeText={this.onNodeChangeText}
          />
       );
 

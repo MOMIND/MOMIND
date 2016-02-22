@@ -18,6 +18,7 @@ export default class Board extends React.Component {
       onNodeRightClick: React.PropTypes.func,
       onNewActiveObject: React.PropTypes.func,
       onNodeChangeText: React.PropTypes.func,
+      onNodeDragStop: React.PropTypes.func,
       nodes: CustomTypes.IMap,
       links: CustomTypes.IMap,
       active: CustomTypes.IMap
@@ -33,6 +34,7 @@ export default class Board extends React.Component {
       onNodeRightClick: (event, shade, id) => console.log("Node RightClick"),
       onNewActiveObject: (shape, id) => console.log("New Active Object"),
       onNodeChangeText : (event,shape, id, text) => console.log("Default Node Text"),
+      onNodeDragStop: (event, shape, id, x, y) => console.log("Default Node Drag Stop"),
       nodes: IMap({}),
       links: IMap({}),
       active: IMap({}),
@@ -46,6 +48,7 @@ export default class Board extends React.Component {
       this.onNodeRightClick = this.onNodeRightClick.bind(this);
       this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
       this.onNodeChangeText = this.onNodeChangeText.bind(this);
+      this.onNodeDragStop = this.onNodeDragStop.bind(this);
    }
 
    state = {
@@ -121,6 +124,7 @@ export default class Board extends React.Component {
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
 
+   // -------------------------- Board Handler ---------------------------- //
    onClick(event) {
       if(this._bubbleClick)
          return this.setBubbleClick(false);
@@ -140,6 +144,8 @@ export default class Board extends React.Component {
          return this.setBubbleRightClick(false);
       this.props.onRightClick(event, ObjectShape.BOARD);
    }
+
+   // -------------------------- Node Handler ----------------------------- //
 
    //If Click comes from Node, Bubble will be true, so Board wont throw a Click Event
    onNodeClick(event, shape, id){
@@ -165,6 +171,10 @@ export default class Board extends React.Component {
       this.props.onNodeChangeText(event, shape, id, text);
    }
 
+   onNodeDragStop(event, shape, id, x, y) {
+      this.props.onNodeDragStop(event, shape, id, x, y);
+   }
+
    // --------------------------------------------------------------------- //
    // ------------------------------ Render ------------------------------- //
    // --------------------------------------------------------------------- //
@@ -181,6 +191,7 @@ export default class Board extends React.Component {
          onRightClick={this.onNodeRightClick}
          onDoubleClick={this.onNodeDoubleClick}
          onChangeText={this.onNodeChangeText}
+         onDragStop={this.onNodeDragStop}
          />
       );
 

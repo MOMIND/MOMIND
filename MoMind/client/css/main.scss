@@ -56,7 +56,16 @@ body {
 .custom-menu {
     z-index:1000;
     position: absolute;
-    background-color:#C0C0C0;
-    border: 1px solid black;
+    color: $black;
+    background-color:$light-green;
+    border: 1px solid $dark-green;
     padding: 2px;
+}
+
+.show-menu {
+   display: inline-block;
+}
+
+.hide-menu {
+   display: none;
 }

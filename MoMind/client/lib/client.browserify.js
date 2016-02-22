@@ -33,3 +33,6 @@ IMap = require("immutable").Map;
 IList = require("immutable").List;
 ISet = require("immutable").Set;
 is = require("immutable").is;
+/* ------------------------ */
+/* ----- Other Stuff ------ */
+/* ------------------------ */

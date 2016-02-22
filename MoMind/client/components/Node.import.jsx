@@ -14,18 +14,22 @@ export default class Node extends React.Component {
       onClick:React.PropTypes.func,
       onDoubleClick: React.PropTypes.func,
       onDragStart: React.PropTypes.func,
+      onDrag: React.PropTypes.func,
       onDragStop: React.PropTypes.func,
       onChangeText: React.PropTypes.func,
       onRightClick: React.PropTypes.func,
+      onRequestParent: React.PropTypes.func,
    };
 
    static defaultProps = {
       onClick: (event, shape, id) => console.log("Node Click"),
       onDoubleClick: (event, shape, id) => console.log("Node DoubleClick"),
       onDragStart: (event, shape, id) => console.log("Node DragStart"),
+      onDrag: (event, shape, id, x, y) => console.log("Node Drag"),
       onDragStop: (event, shape, id, x, y) => console.log("Node DragStop"),
       onChangeText: (event, shape, id, text) => console.log("Node ChangeText"),
       onRightClick: (event, shape, id) => console.log("Node RightClick"),
+      onRequestParent: (childthis, parentid) => console.log("Want Draw Line"), 
    };
 
    constructor(props) {
@@ -39,6 +43,7 @@ export default class Node extends React.Component {
       dragged: false,
       active: false,
       status: NodeMode.DRAG,
+      endpoint: null,
    };
 
    // --------------------------------------------------------------------- //
@@ -55,19 +60,22 @@ export default class Node extends React.Component {
             this.onDragStart(event);
          },
 
+         drag: (event, ui) => {
+            this.onDrag(event, ui.position.left, ui.position.top);
+         },
+
          stop: (event, ui) => {
             this.onDragStop(event, ui.position.left, ui.position.top);
          },
-         distance: 5,
-         opacity: 0.5,
+         distance: 10,
+         opacity: 0.65,
       });
 
       $(ReactDOM.findDOMNode(this)).dblclick((event) => this.onDoubleClick(event));
-
       $(ReactDOM.findDOMNode(this)).bind("contextmenu", (event) => this.onRightClick(event));
+   
+      this.createLink()
    }
-
-
 
    // --------------------------------------------------------------------- //
    // -------------------------- Class Methods ---------------------------- //
@@ -91,6 +99,23 @@ export default class Node extends React.Component {
          this.setState({status: NodeMode.DRAG}, () => fn);
    }
 
+   createLink() {
+      if(!this.props.node.getIn(['parent', this.props.mapId]) == true)
+         this.props.onRequestParent(this, this.props.node.getIn(['parent']).toList().get(0));
+   }
+
+   setEndpoint(obj)
+   {
+      this.setState({
+         endpoint: obj,
+      })
+   }
+
+   deleteEndpoint()
+   {
+      jsPlumb.deleteEndpoint(this.state.endpoint);
+   }
+
    // --------------------------------------------------------------------- //
    // -------------------------- Event Handler ---------------------------- //
    // --------------------------------------------------------------------- //
@@ -106,6 +131,9 @@ export default class Node extends React.Component {
       this.props.onDragStart(event, ObjectShape.NODE, this.props.id);
    }
 
+   onDrag(event, x, y) {
+      this.props.onDrag(event, ObjectShape.NODE, this.props.id, x, y);
+   }
    onDragStop(event, x, y){
       this.setState({dragged: false});
       this.props.onDragStop(event, ObjectShape.NODE, this.props.id, x, y);

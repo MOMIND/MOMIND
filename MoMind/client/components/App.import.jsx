@@ -14,7 +14,7 @@ class App extends React.Component {
    }
 
    state = {
-
+      jsPlumbReady: false,
    };
 
    // --------------------------------------------------------------------- //
@@ -24,6 +24,8 @@ class App extends React.Component {
    componentDidMount() {
       this.props.Action.SetMapId(mapId);
       this.props.Action.SetCreatorId(localId);
+
+      jsPlumb.bind("ready", () => this.jsPlumbDraw());
    }
 
    // --------------------------------------------------------------------- //
@@ -108,8 +110,11 @@ class App extends React.Component {
    doDeleteNode = () => {
       const ref = this.mapRefToNode();
 
-      if(ref !== false)
+      if(ref !== false){
+         console.log(this.Board.getRef(ObjectShape.NODE, ref));
+         this.Board.getRef(ObjectShape.NODE, ref).deleteEndpoint();
          this.props.Action.DeleteNode(ref);
+      }
    }
 
    doRenameNode = () => {
@@ -210,10 +215,15 @@ class App extends React.Component {
             {this.renderContext()}
          </div>
       );
-  }
+   }
+
+   jsPlumbDraw = () => {
+      this.setState({
+         jsPlumbReady: true,
+      })
+   }
 }
 
-RMixIn(App.prototype, ReactMeteorData);
 
 // --------------------------------------------------------------------- //
 // ------------------------- Redux Management -------------------------- //

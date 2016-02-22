@@ -7,6 +7,7 @@ localId = null; //A UserId, tied to LocalStorage
 initialSave = false; //if the initial node has been saved
 saved = true; //will show client if he is uptodate/saved changes on server (not yet implemented)
 Store = null;
+AppElement = null; //will be sued to draw the Lines
 
 System.import('/client/lib/reducer').then((reducer) => Store = Redux.createStore(reducer.default, undefined, window.devToolsExtension ? window.devToolsExtension() : undefined));
 

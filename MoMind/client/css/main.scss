@@ -47,3 +47,15 @@ body {
    width:2500px;
    height: 1500px;
 }
+
+.jsplumb-connector { 
+   display:none;
+}
+
+.jsplumb-endpoint { 
+   z-index:1; 
+}
+
+.jsplumb-overlay { 
+   z-index:3; 
+}

@@ -59,12 +59,6 @@ export default class Board extends React.Component {
    // -------------------------- Class Methods ---------------------------- //
    // --------------------------------------------------------------------- //
 
-   getMeteorData() {
-      return {
-         nodes: MoNodes.find().fetch()
-      };
-   }
-
    getRef(id, shape) {
       let ref = null;
 
@@ -236,5 +230,3 @@ export default class Board extends React.Component {
       );
    }
 }
-
-RMixIn(Board.prototype, ReactMeteorData);

@@ -56,6 +56,9 @@ const SetCreatorId = ActionCreator(SET_CREATORID, 'id');
 const SET_ACTIVE_OBJECT = 'SET_ACTIVE_OBJECT'; //ACTION: Set Reference and Type of Active Object
 const SetActiveObject = ActionCreator(SET_ACTIVE_OBJECT, 'ref', 'shape');
 
+const RESET_STATE = 'RESET_STATE'; //ACTION: Set Reference and Type of Active Object
+const ResetState = ActionCreator(RESET_STATE,);
+
 // ------------------------------------------------------------ //
 // -------------------- Export Constants ---------------------- //
 // ------------------------------------------------------------ //
@@ -91,6 +94,7 @@ export const Actions = {
    SetMapId,
    SetCreatorId,
    SetActiveObject,
+   ResetState,
 }
 
 export const ActionConstants = {
@@ -106,6 +110,7 @@ export const ActionConstants = {
    SET_MAPID,
    SET_CREATORID,
    SET_ACTIVE_OBJECT,
+   RESET_STATE
 }
 /*Template:
 export function AddNode(id, text, x, y) {

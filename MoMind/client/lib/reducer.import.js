@@ -79,9 +79,12 @@ function MoLinkReducer(state = IMap({}), action)
 
 
 export default function MoMindReducer(state = initialState, action) {
-   return state.set('nodes', MoNodesReducer(state.get('nodes'), action))
-               .set('moment', MoMentReducer(state.get('moment'), action))
-               .set('links', MoLinkReducer(state.get('link'), action))
+   if(action.type === ActionConstants.RESET_STATE)
+      return initialState;
+   else
+      return state.set('nodes', MoNodesReducer(state.get('nodes'), action))
+                  .set('moment', MoMentReducer(state.get('moment'), action))
+                  .set('links', MoLinkReducer(state.get('link'), action))
 }
 /*
    Split Reducer

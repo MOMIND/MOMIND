@@ -12,13 +12,13 @@ Meteor.startup(function(){
     mapId = result;
     localId = Random.id(8);
     MoMindReady();
-    
-    Meteor.subscribe('MoNodes', mapId, {
+
+    /*Meteor.subscribe('MoNodes', mapId, {
       onReady() {
         
       }
     });
 
-    Meteor.subscribe('MoHist', mapId);
+    Meteor.subscribe('MoHist', mapId);*/
   });
 });
